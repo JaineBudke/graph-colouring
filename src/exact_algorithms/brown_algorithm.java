@@ -18,7 +18,7 @@ public class brown_algorithm {
 	private ArrayList< ArrayList<String> > U = new ArrayList<>();
 	
 	// Vetor contendo o conjunto de total de cores utilizadas por uma coloração parcial com i vértices coloridos
-	private ArrayList< ArrayList<Integer> > L = new ArrayList<>();
+	private ArrayList<Integer> L = new ArrayList<>();
 		
 	
 
@@ -89,8 +89,9 @@ public class brown_algorithm {
 		int i = 2;
 		int k = n;
 		
-
-		int l1 = 1;
+		// iniciliza l1 (pos=0) com 1
+		L.add(0, 1);
+		
 		boolean atualizarU = true;
 		
 		while (i > 1) {
@@ -106,9 +107,10 @@ public class brown_algorithm {
 			}
 			//Se Ui = ∅ então
 			if( U.get(i).isEmpty() ){
-				// NÃO ENTENDI AINDA OQ EH O Li
-				//backtrack(i-1, i, li, q);
+				
+				backtrack(i-1, i, L.get(i), q);
 				atualizarU = false;
+			
 			}
 			else {
 				
@@ -117,20 +119,41 @@ public class brown_algorithm {
 				vertexes.get(i).setColor(color); // Atribui cor ao vértice examinado 
 				U.get(i).remove(0); // remove cor de Ui
 				
+				int j = Integer.parseInt(color);
+				
 				// Se a cor j é menor do que o limitante superior k então
-				if( Integer.parseInt(color) < k ){
+				if( j < k ){
 					
 					// Se a cor j é maior do que o limitante inferior q então
-					if( Integer.parseInt(color) > q ){
-						q = q+q;
+					if( j > q ){
+						q = q+1;
 					}
 					// Se i = n então
 					if( i == n ){
 						
-						// Guarde a solução atual e faça k ← q
+						// IMPLEMENTAR: Guarde a solução atual e faça k ← q
+						// IMPLEMENTAR: Encontre o menor índice j para o qual a cor do vértice vj é igual a k.
+						
+						backtrack(j-1, i, k-1, q);
+						atualizarU = false;
+						
+					}
+					else {
+						
+						//li ← q
+						L.set(i, q);
+						
+						//i ← i + 1 //um novo vértice é selecionado para ser colorido
+						i = i+1;
+						
+						atualizarU = true;
 						
 					}
 					
+				}
+				else {
+					backtrack(i-1, i, L.get(i), q);
+					atualizarU = false;
 				}
 					
 				
