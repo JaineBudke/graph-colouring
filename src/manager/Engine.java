@@ -81,7 +81,7 @@ public class Engine {
 		File folder = new File(absolutePath + "/src/data");
 		File[] listOfFiles = folder.listFiles();
 
-		String filename = "aaa.txt";
+		String filename = "emptyGraph.txt";
 		/*for (int i = 0; i < index; i++) {
 			filename = listOfFiles[i].getName();
 		}*/
@@ -96,7 +96,7 @@ public class Engine {
 	 * Cria grafo a partir de arquivo de texto:
 	 * Vertices: aulas; Arestas: relação dada a aulas assistidas pelo mesmo aluno.
 	 */
-	public void createGraph(  ) {
+	public Graph createGraph(  ) {
 
 		graph = new Graph();
 
@@ -146,11 +146,9 @@ public class Engine {
 
 			}
 			
-			
-			
-			
-			
 		}
+		
+		return graph;
 		
 
 		
