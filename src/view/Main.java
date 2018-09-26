@@ -21,7 +21,7 @@ public class Main {
 		
 		// executa algoritmo de coloração
 		int k = brown.executeBrown(graph);
-		System.out.println(k);
+		System.out.println("Número cromático do grafo: "+k);
 		
 	}
 
