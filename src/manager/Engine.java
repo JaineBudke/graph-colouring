@@ -47,7 +47,11 @@ public class Engine {
 			) {
 
 			String linha = lerArq.readLine(); // lê a primeira linha
-
+			
+			int p = 0;
+			System.out.println("Linha " + p + "lida");
+			p++;
+			
 			while ( linha != null ) {
 				ArrayList<String> lectures = new ArrayList<String>(); 
 
@@ -101,10 +105,12 @@ public class Engine {
 	 * Cria grafo a partir de arquivo de texto:
 	 * Vertices: aulas; Arestas: relação dada a aulas assistidas pelo mesmo aluno.
 	 */
-	public void createGraph(  ) {
+	public Graph createGraph(  ) {
 
 		graph = new Graph();
 
+		System.out.println("Gerando grafo");
+		
 		for( int student=0; student < students.size(); student++ ){ // percorre lista de estudantes
 			
 			// lista com aulas do estudante analisado
@@ -116,18 +122,22 @@ public class Engine {
 			// percorre aulas do estudante analisado
 			for( int i=0; i < lecturesStudent.size(); i++ ){
 
+				
+				
 				// cria um vértice com o rótulo da aula
 				Vertex vertex = new Vertex( "v"+lecturesStudent.get(i) );
 				// se não contém vertice
 				if( graph.containsVertex(vertex) == null ){
 					graph.addVertex(vertex);
 					vertexStudent[i] = vertex;
+					System.out.println("Adicionado vertice");
 				} else {
 					vertexStudent[i] = graph.containsVertex(vertex);
 				}
 
 			}
 
+			System.out.println("Adicionado arestas");
 			// adiciona arestas do estudante ao grafo
 			for( int j=0; j < lecturesStudent.size(); j++ ){ // percorre todas as aulas
 				for( int k=j+1; k < lecturesStudent.size(); k++ ){ // percorre as atividades a partir de j
@@ -141,6 +151,7 @@ public class Engine {
 						graph.addEdge(edge);
 						v1.addAdjacent(edge);
 						v2.addAdjacent(edge);
+						
 					} else {
 						// aumenta o peso da aresta
 						Edge e = graph.containsEdge(edge);
@@ -151,11 +162,9 @@ public class Engine {
 
 			}
 			
-			
-			
-			
-			
 		}
+		
+		return graph;
 		
 
 		
