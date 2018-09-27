@@ -60,7 +60,7 @@ public class Engine {
 
 				for( int i=0; i < element.length; i++ ){
 
-					if( element[i] != "e" ){
+					if( !element[i].equals("e") ){
 
 						lectures.add(element[i]); // adiciona atividade
 							
@@ -84,7 +84,7 @@ public class Engine {
 	 * Lê arquivo de entrada e separa as atividades
 	 * @param index Indice do arquivo
 	 */
-	public void readArchive(int index) {
+	public void readArchivebyFilename(String filename) {
 
 
 		File f = new File("");
@@ -94,10 +94,11 @@ public class Engine {
 		ArrayList<File> listOfFiles = new ArrayList<File>(Arrays.asList(folder.listFiles()));
 		listOfFiles.sort(null);
 
+		/**
 		String filename = listOfFiles.get(0).getName();
 		for (int i = 1; i <= index; i++) {
 			filename = listOfFiles.get(i).getName();
-		}
+		}**/
 		
 		
 		this.readArchive(absolutePath+"/src/data/" + filename);
@@ -134,14 +135,14 @@ public class Engine {
 				if( graph.containsVertex(vertex) == null ){
 					graph.addVertex(vertex);
 					vertexStudent[i] = vertex;
-					System.out.println("Adicionado vertice");
+					LOGGER.info("Adicionado vertice");
 				} else {
 					vertexStudent[i] = graph.containsVertex(vertex);
 				}
 
 			}
 
-			System.out.println("Adicionado arestas");
+			LOGGER.info("Adiciona arestas");
 			// adiciona arestas do estudante ao grafo
 			for( int j=0; j < lecturesStudent.size(); j++ ){ // percorre todas as aulas
 				for( int k=j+1; k < lecturesStudent.size(); k++ ){ // percorre as atividades a partir de j

@@ -12,10 +12,8 @@ public class Main {
 		Engine engine = new Engine( );
 		Brown_algorithm brown = new Brown_algorithm();
 		
-		int ctIndex = 7;
-		
 		// lê arquivo com o índice indicado
-		engine.readArchive(ctIndex);
+		engine.readArchivebyFilename("myciel3.col");
 		// cria o grafo
 		Graph graph = engine.createGraph();
 		

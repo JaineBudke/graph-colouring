@@ -110,7 +110,7 @@ public class Brown_algorithm {
 			
 			// se vertice possui cor = k entao
 			if( color == k ){
-				return k;
+				return p;
 			}
 			
 		}
