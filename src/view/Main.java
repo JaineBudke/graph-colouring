@@ -1,19 +1,25 @@
 package view;
 
 import manager.Engine;
+import exact_algorithms.Brown_algorithm;
+import graph.Graph;
+
 
 public class Main {
 
 	public static void main(String[] args) {
 	
 		Engine engine = new Engine( );
-		
-		int ctIndex = 1;
+		Brown_algorithm brown = new Brown_algorithm();
 		
 		// lê arquivo com o índice indicado
-		engine.readArchive(ctIndex);
+		engine.readArchivebyFilename("myciel7.col");
 		// cria o grafo
-		engine.createGraph();
+		Graph graph = engine.createGraph();
+		
+		// executa algoritmo de coloração
+		int k = brown.executeBrown(graph);
+		System.out.println("Número cromático do grafo: "+k);
 		
 	}
 

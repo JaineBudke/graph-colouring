@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.logging.Logger;
 
 import graph.Edge;
@@ -28,6 +30,10 @@ public class Engine {
 		students = new ArrayList< ArrayList<String> >();
 	}
 	
+	public Graph getGraph() {
+		return graph;
+	}
+	
 	
 	/**
 	 * Lê arquivo de entrada e separa as atividades
@@ -41,7 +47,11 @@ public class Engine {
 			) {
 
 			String linha = lerArq.readLine(); // lê a primeira linha
-
+			
+			int p = 0;
+			System.out.println("Linha " + p + "lida");
+			p++;
+			
 			while ( linha != null ) {
 				ArrayList<String> lectures = new ArrayList<String>(); 
 
@@ -50,13 +60,15 @@ public class Engine {
 
 				for( int i=0; i < element.length; i++ ){
 
-					lectures.add(element[i]); // adiciona atividade
+					if( !element[i].equals("e") ){
+
+						lectures.add(element[i]); // adiciona atividade
+							
+					}
 					
 				}
 
 				students.add(lectures);
-
-				System.out.println(students);
 				
 				linha = lerArq.readLine(); // lê a próxima linha
 			}
@@ -72,19 +84,21 @@ public class Engine {
 	 * Lê arquivo de entrada e separa as atividades
 	 * @param index Indice do arquivo
 	 */
-	public void readArchive(int index) {
+	public void readArchivebyFilename(String filename) {
 
 
 		File f = new File("");
 		String absolutePath = f.getAbsolutePath();
 
 		File folder = new File(absolutePath + "/src/data");
-		File[] listOfFiles = folder.listFiles();
+		ArrayList<File> listOfFiles = new ArrayList<File>(Arrays.asList(folder.listFiles()));
+		listOfFiles.sort(null);
 
-		String filename = "aaa.txt";
-		/*for (int i = 0; i < index; i++) {
-			filename = listOfFiles[i].getName();
-		}*/
+		/**
+		String filename = listOfFiles.get(0).getName();
+		for (int i = 1; i <= index; i++) {
+			filename = listOfFiles.get(i).getName();
+		}**/
 		
 		
 		this.readArchive(absolutePath+"/src/data/" + filename);
@@ -96,10 +110,12 @@ public class Engine {
 	 * Cria grafo a partir de arquivo de texto:
 	 * Vertices: aulas; Arestas: relação dada a aulas assistidas pelo mesmo aluno.
 	 */
-	public void createGraph(  ) {
+	public Graph createGraph(  ) {
 
 		graph = new Graph();
 
+		System.out.println("Gerando grafo");
+		
 		for( int student=0; student < students.size(); student++ ){ // percorre lista de estudantes
 			
 			// lista com aulas do estudante analisado
@@ -111,18 +127,22 @@ public class Engine {
 			// percorre aulas do estudante analisado
 			for( int i=0; i < lecturesStudent.size(); i++ ){
 
+				
+				
 				// cria um vértice com o rótulo da aula
 				Vertex vertex = new Vertex( "v"+lecturesStudent.get(i) );
 				// se não contém vertice
 				if( graph.containsVertex(vertex) == null ){
 					graph.addVertex(vertex);
 					vertexStudent[i] = vertex;
+					LOGGER.info("Adicionado vertice");
 				} else {
 					vertexStudent[i] = graph.containsVertex(vertex);
 				}
 
 			}
 
+			LOGGER.info("Adiciona arestas");
 			// adiciona arestas do estudante ao grafo
 			for( int j=0; j < lecturesStudent.size(); j++ ){ // percorre todas as aulas
 				for( int k=j+1; k < lecturesStudent.size(); k++ ){ // percorre as atividades a partir de j
@@ -136,6 +156,7 @@ public class Engine {
 						graph.addEdge(edge);
 						v1.addAdjacent(edge);
 						v2.addAdjacent(edge);
+						
 					} else {
 						// aumenta o peso da aresta
 						Edge e = graph.containsEdge(edge);
@@ -146,11 +167,9 @@ public class Engine {
 
 			}
 			
-			
-			
-			
-			
 		}
+		
+		return graph;
 		
 
 		

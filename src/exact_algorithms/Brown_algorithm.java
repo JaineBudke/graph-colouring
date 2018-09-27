@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
 
 
-public class brown_algorithm {
+public class Brown_algorithm {
 
 	
 	private Graph graphTemp;
@@ -18,8 +19,19 @@ public class brown_algorithm {
 	private ArrayList< ArrayList<String> > U = new ArrayList<>();
 	
 	// Vetor contendo o conjunto de total de cores utilizadas por uma coloração parcial com i vértices coloridos
-	private ArrayList< ArrayList<Integer> > L = new ArrayList<>();
+	private ArrayList<Integer> L = new ArrayList<>();
 		
+	
+	// q = color
+	private int q = 1;		
+	
+	// inicialização de variáveis
+	private int i = 1;
+	
+	
+	private ArrayList<Vertex> bestColouring;
+	
+	
 	
 
 	/**
@@ -44,7 +56,34 @@ public class brown_algorithm {
 	 */
 	public void generateUi( Vertex v, int index ){
 		
-		// stub
+		// lista com cores dos vertices adjacentes
+		ArrayList<String> adjacentsColors = new ArrayList<>();
+		
+		// recupera vértices adjacentes a v
+		ArrayList<Edge> adjacentsVertexes = v.getAdjacentVertexes();
+		
+		
+		// percorre lista de vértices adjacentes
+		for( int p=0; p<adjacentsVertexes.size(); p++ ){
+			Edge currentEdge = adjacentsVertexes.get(p);
+			Vertex adjacent = currentEdge.getVertex(v);
+			
+			if( adjacent.getColor() != null ){
+				adjacentsColors.add( adjacent.getColor() );
+			}
+			
+		}
+		
+		// adiciona a Ui as cores de 1 até q+1 que sejam diferentes da coloração dos adjacentes
+		for( int p=1; p<=q+1; p++ ){
+			
+			// verifica se algum adjacente está colorido com a cor
+			if( !adjacentsColors.contains(p+"") ){
+				U.get(index).add(p+"");
+			}
+			
+		}
+		
 		
 	}
 	
@@ -52,10 +91,31 @@ public class brown_algorithm {
 	/**
 	 * Backtrack
 	 */
-	public void backtrack( int indPasso, int i, int limInf, int q ){
+	public void backtrack( int indPasso, int limInf ){
 		
-		// stub
+		i = indPasso;
+		q = limInf;
 		
+	}
+	
+	/**
+	 * Encontra o menor índice j para o qual a cor do vértice vj é igual a k.
+	 */
+	public int findIndex( int k ){
+		
+		// percorre lista de vértices do grafo
+		for( int p=0; p<vertexes.size(); p++ ){
+
+			int color = Integer.parseInt( vertexes.get(p).getColor() );
+			
+			// se vertice possui cor = k entao
+			if( color == k ){
+				return p;
+			}
+			
+		}
+		
+		return 1;
 	}
 
 	
@@ -64,7 +124,7 @@ public class brown_algorithm {
 	 * Algoritmo principal de execução da coloração
 	 * @param graph Grafo a ser colorido
 	 */
-	public void executeBrown( Graph graph ){
+	public int executeBrown( Graph graph ){
 		
 		
 		// clonando grafo, vertices e arestas
@@ -80,20 +140,24 @@ public class brown_algorithm {
 		int n = vertexes.size();
 
 
-		// q = color
-		int q = 1;		
 		// Atribua a cor de índice 1 a v1
 		vertexes.get(0).setColor(q+"");
 		
 		// inicialização de variáveis
-		int i = 2;
 		int k = n;
 		
-
-		int l1 = 1;
+		// iniciliza l1 (pos=0) com 1
+		L.add(0, 1);
+		
+		// inicializa U
+		for( int x=0; x<vertexes.size(); x++ ){
+			U.add( new ArrayList<>() );
+		}
+		
+		
 		boolean atualizarU = true;
 		
-		while (i > 1) {
+		while (i > 0) {
 			
 			//Soluções são geradas enquanto o nó raiz da árvore não é alcançado.
 			if ( atualizarU == true ) {
@@ -106,9 +170,10 @@ public class brown_algorithm {
 			}
 			//Se Ui = ∅ então
 			if( U.get(i).isEmpty() ){
-				// NÃO ENTENDI AINDA OQ EH O Li
-				//backtrack(i-1, i, li, q);
+				
+				backtrack(i-1, L.get(i));
 				atualizarU = false;
+			
 			}
 			else {
 				
@@ -117,20 +182,47 @@ public class brown_algorithm {
 				vertexes.get(i).setColor(color); // Atribui cor ao vértice examinado 
 				U.get(i).remove(0); // remove cor de Ui
 				
+				int j = Integer.parseInt(color);
+				
 				// Se a cor j é menor do que o limitante superior k então
-				if( Integer.parseInt(color) < k ){
+				if( j < k ){
 					
 					// Se a cor j é maior do que o limitante inferior q então
-					if( Integer.parseInt(color) > q ){
-						q = q+q;
+					if( j > q ){
+						q = q+1;
 					}
 					// Se i = n então
-					if( i == n ){
+					if( i == n-1 ){
 						
 						// Guarde a solução atual e faça k ← q
+						bestColouring = vertexes;
+						k = q;
+						
+						// Encontre o menor índice j para o qual a cor do vértice vj é igual a k.
+						j = findIndex(k);
+						
+						
+						backtrack(j-1, k-1);
+						atualizarU = false;
+						
+					}
+					else {
+						
+						//li ← q
+						//L.set(i, q);
+						L.add(i, q);
+						
+						//i ← i + 1 //um novo vértice é selecionado para ser colorido
+						i = i+1;
+						
+						atualizarU = true;
 						
 					}
 					
+				}
+				else {
+					backtrack(i-1, L.get(i-1));
+					atualizarU = false;
 				}
 					
 				
@@ -138,6 +230,7 @@ public class brown_algorithm {
 			
 		}
 		
+		return k;
 		
 		
 	}
