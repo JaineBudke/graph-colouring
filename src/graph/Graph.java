@@ -407,5 +407,30 @@ public class Graph implements Cloneable, Serializable {
 		return true;
 	}
 
+	/**
+	 * Recupera dois vértices que não são adjacente
+	 * @return
+	 */
+	public Vertex[] getNonAdjacentVertexes() {
+		Vertex[] vertexes = new Vertex[2];
+		for( int i = 0; i < vertexList.size(); i++) {
+			for(int j = 0; j < vertexList.size(); j++) {
+				if(i != j) {
+					// Para cada vértice, verifica se todos os 
+					// outros são adjacentes a ele
+					vertexes[0] = vertexList.get(i);
+					vertexes[1] = vertexList.get(j);
+					if( !vertexes[0].isAdjacent(vertexes[0])) {
+						return vertexes;
+					}
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	
+
 
 }

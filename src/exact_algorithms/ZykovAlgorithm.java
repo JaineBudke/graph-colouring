@@ -9,7 +9,7 @@ public class ZykovAlgorithm {
 	private Graph graph;
 	
 	
-	private int cor(Graph graphTemp) {
+	private void cor(Graph graphTemp) {
 		int n = graphTemp.getVertexes().size();
 		
 		if(graphTemp.isComplete()) {
@@ -33,9 +33,9 @@ public class ZykovAlgorithm {
 		graphTemp = graph.clone();
 		//recupera o numero cromatico do grafo
 		q = graph.getVertexes().size();
-		int k = cor(graph);
+		cor(graph);
 		
-		return k;
+		return q;
 	}
 
 }
