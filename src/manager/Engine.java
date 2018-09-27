@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.logging.Logger;
 
 import graph.Edge;
@@ -26,6 +28,10 @@ public class Engine {
 	 */	
 	public Engine() {
 		students = new ArrayList< ArrayList<String> >();
+	}
+	
+	public Graph getGraph() {
+		return graph;
 	}
 	
 	
@@ -55,8 +61,6 @@ public class Engine {
 				}
 
 				students.add(lectures);
-
-				System.out.println(students);
 				
 				linha = lerArq.readLine(); // lê a próxima linha
 			}
@@ -79,12 +83,13 @@ public class Engine {
 		String absolutePath = f.getAbsolutePath();
 
 		File folder = new File(absolutePath + "/src/data");
-		File[] listOfFiles = folder.listFiles();
+		ArrayList<File> listOfFiles = new ArrayList<File>(Arrays.asList(folder.listFiles()));
+		listOfFiles.sort(null);
 
-		String filename = "aaa.txt";
-		/*for (int i = 0; i < index; i++) {
-			filename = listOfFiles[i].getName();
-		}*/
+		String filename = listOfFiles.get(0).getName();
+		for (int i = 1; i <= index; i++) {
+			filename = listOfFiles.get(i).getName();
+		}
 		
 		
 		this.readArchive(absolutePath+"/src/data/" + filename);

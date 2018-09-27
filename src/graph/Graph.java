@@ -356,6 +356,25 @@ public class Graph implements Cloneable, Serializable {
 		return bld.toString();
 
 	}
+	
+	/**
+	 * Verificar se a coloração de um grafo é valida
+	 * @return
+	 */
+	public boolean hasValidColoring() {
+		for( int v = 0; v < vertexList.size(); v++) {
+			//checa se a cor de v é diferente da de seus vizinhos
+			Vertex vertex = vertexList.get(v);
+			for ( Edge adjacent : vertex.getAdjacentVertexes()) {
+				String adjacentColor = adjacent.getVertex(vertex).getColor();
+				if ( vertex.getColor().equals(adjacentColor)) {
+					return false;
+				}
+			}
+		}
+		
+		return true;
+	}
 
 
 }
