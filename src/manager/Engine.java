@@ -60,7 +60,11 @@ public class Engine {
 
 				for( int i=0; i < element.length; i++ ){
 
-					lectures.add(element[i]); // adiciona atividade
+					if( element[i] != "e" ){
+
+						lectures.add(element[i]); // adiciona atividade
+							
+					}
 					
 				}
 

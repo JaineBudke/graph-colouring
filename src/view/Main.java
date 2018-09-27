@@ -12,7 +12,7 @@ public class Main {
 		Engine engine = new Engine( );
 		Brown_algorithm brown = new Brown_algorithm();
 		
-		int ctIndex = 1;
+		int ctIndex = 7;
 		
 		// lê arquivo com o índice indicado
 		engine.readArchive(ctIndex);
