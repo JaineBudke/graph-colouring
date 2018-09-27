@@ -13,7 +13,7 @@ public class Main {
 		Brown_algorithm brown = new Brown_algorithm();
 		
 		// lê arquivo com o índice indicado
-		engine.readArchivebyFilename("myciel3.col");
+		engine.readArchivebyFilename("myciel7.col");
 		// cria o grafo
 		Graph graph = engine.createGraph();
 		
