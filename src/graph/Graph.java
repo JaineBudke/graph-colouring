@@ -46,6 +46,15 @@ public class Graph implements Cloneable, Serializable {
 	public void addEdge( Edge e ){	
 		edgeList.add(e);
 	}
+	
+	/**
+	 * Método para adicionar nova aresta do grafo
+	 * @param v1
+	 * @param v2
+	 */
+	public void addEdge( Vertex v1, Vertex v2 ){	
+		edgeList.add(new Edge(v1, v2));
+	}
 
 	/**
 	 * Método para adicionar novo vértice do grafo
@@ -369,6 +378,28 @@ public class Graph implements Cloneable, Serializable {
 				String adjacentColor = adjacent.getVertex(vertex).getColor();
 				if ( vertex.getColor().equals(adjacentColor)) {
 					return false;
+				}
+			}
+		}
+		
+		return true;
+	}
+	/**
+	 * Verifica se o grafo é completo
+	 * @return Verdadeiro, se o grafo é completo. Falso caso contrario.
+	 */
+	public boolean isComplete() {
+		
+		for( int i = 0; i < vertexList.size(); i++) {
+			for(int j = 0; j < vertexList.size(); j++) {
+				if(i != j) {
+					// Para cada vértice, verifica se todos os 
+					// outros são adjacentes a ele
+					Vertex v1 = vertexList.get(i);
+					Vertex v2 = vertexList.get(j);
+					if( !v1.isAdjacent(v2)) {
+						return false;
+					}
 				}
 			}
 		}

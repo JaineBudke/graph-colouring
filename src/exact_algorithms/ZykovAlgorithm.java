@@ -9,14 +9,22 @@ public class ZykovAlgorithm {
 	private Graph graph;
 	
 	
-	private int cor(Graph graph) {
-		int n = graph.getVertexes().size();
+	private int cor(Graph graphTemp) {
+		int n = graphTemp.getVertexes().size();
 		
-		if(graph.isComplete()) {
+		if(graphTemp.isComplete()) {
 			q = Math.min(n, q);
 		} else {
 			Vertex[] vertexes = new Vertex[2];
-			vertexes = graph.getNonAdjacentVertexes();
+			vertexes = graphTemp.getNonAdjacentVertexes();
+			//Contrai vertices
+			Graph graphCon = graphTemp.clone();
+			graphCon.mergeVertexes(vertexes[0], vertexes[1]);
+			cor( graphCon );
+			
+			//Inicia caminho de adição de arestas
+			graphTemp.addEdge(vertexes[0], vertexes[1]);
+			cor(graphTemp);
 		}
 	}
 	

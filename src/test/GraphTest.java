@@ -57,5 +57,62 @@ public class GraphTest {
 		assertEquals(false, graph.hasValidColoring());
 		
 	}
+	
+	@Test
+	public void isComplete() {
+Graph graph = new Graph();
+		
+		//cria vertices
+		for( int i = 0; i< 10; i++) {
+			Vertex v = new Vertex("v"+i);
+			graph.addVertex(v);
+		}
+		
+		assertEquals(false, graph.isComplete());
+		
+		// Testa grafo completo com cores diferentes
+		graph.getEdges().clear();
+		for(int i = 0; i < graph.getVertexes().size(); i++) {
+			for( int j = i +1 ;j < graph.getVertexes().size(); j++) {
+				Edge e = new Edge(graph.getVertex(i), graph.getVertex(j));
+				graph.addEdge(e);
+				graph.getVertex(i).addAdjacent(e);
+				graph.getVertex(j).addAdjacent(e);
+			}
+		}
+		
+		assertEquals(true, graph.isComplete());
+		
+		// Testa com algums arestas
+		graph.getVertexes().clear();
+		graph.getEdges().clear();
+		for( int i = 0; i< 10; i++) {
+			Vertex v = new Vertex("v"+i);
+			graph.addVertex(v);
+		}
+		
+		for( int i = 0; i< 5; i++) {
+			Edge e = new Edge(graph.getVertex(i), graph.getVertex(i+5));
+			graph.addEdge(e);
+			graph.getVertex(i).addAdjacent(e);
+			graph.getVertex(i+5).addAdjacent(e);
+		}
+		
+		assertEquals(false, graph.isComplete());
+		
+		// Testa com uma aresta
+		graph.getVertexes().clear();
+		graph.getEdges().clear();
+		for( int i = 0; i< 5; i++) {
+			Vertex v = new Vertex("v"+i);
+			graph.addVertex(v);
+		}
+		Edge e = new Edge(graph.getVertex(0), graph.getVertex(4));
+		graph.addEdge(e);
+		graph.getVertex(0).addAdjacent(e);
+		graph.getVertex(4).addAdjacent(e);
+		assertEquals(false, graph.isComplete());
+		
+	}
 
 }
