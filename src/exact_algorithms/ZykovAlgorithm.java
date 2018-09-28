@@ -18,6 +18,7 @@ public class ZykovAlgorithm {
 		
 		if(graphTemp.isComplete()) {
 			q = Math.min(n, q);
+			LOGGER.info("Grafo completo");
 		} else {
 			Vertex[] vertexes = new Vertex[2];
 			vertexes = graphTemp.getNonAdjacentVertexes();
@@ -25,16 +26,16 @@ public class ZykovAlgorithm {
 
 				//Contrai vertices
 				Graph graphCon = graphTemp.clone();
-				graphCon.mergeVertexes(graphCon.findVertexFromLabel(vertexes[0].getLabel()), graphCon.findVertexFromLabel(vertexes[0].getLabel()));
+				graphCon.mergeVertexes(graphCon.findVertexFromLabel(vertexes[0].getLabel()), graphCon.findVertexFromLabel(vertexes[1].getLabel()));
 				LOGGER.info("Contrai "  + vertexes[0].getLabel() + " e " + vertexes[1].getLabel());
 				cor( graphCon );
 				
 				//Inicia caminho de adição de arestas
-				Graph graphAdd = graphTemp.clone();
-				graphAdd.mergeVertexes(graphAdd.findVertexFromLabel(vertexes[0].getLabel()), graphAdd.findVertexFromLabel(vertexes[0].getLabel()));
+				//Graph graphAdd = graphTemp.clone();
+				graphTemp.addEdge(vertexes[0],  vertexes[1]);
 				
 				LOGGER.info("Adiciona aresta entre " + vertexes[0].getLabel() + " e " + vertexes[1].getLabel());
-				cor(graphAdd);
+				cor(graphTemp);
 			}
 		}
 	}
