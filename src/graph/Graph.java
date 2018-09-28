@@ -53,7 +53,10 @@ public class Graph implements Cloneable, Serializable {
 	 * @param v2
 	 */
 	public void addEdge( Vertex v1, Vertex v2 ){	
-		edgeList.add(new Edge(v1, v2));
+		Edge e = new Edge(v1, v2);
+		edgeList.add(e);
+		v1.addAdjacent(e);
+		v2.addAdjacent(e);
 	}
 
 	/**
@@ -298,7 +301,7 @@ public class Graph implements Cloneable, Serializable {
 				addEdge(edge);
 
 				// atualiza lista de adjacencia de v1
-				adjacentsV1.add(edge);
+				v1.addAdjacent(edge);
 				vAdV2.addAdjacent(edge);
 			}
 
@@ -420,7 +423,7 @@ public class Graph implements Cloneable, Serializable {
 					// outros são adjacentes a ele
 					vertexes[0] = vertexList.get(i);
 					vertexes[1] = vertexList.get(j);
-					if( !vertexes[0].isAdjacent(vertexes[0])) {
+					if( !vertexes[0].isAdjacent(vertexes[1])) {
 						return vertexes;
 					}
 				}

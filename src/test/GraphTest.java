@@ -114,5 +114,59 @@ Graph graph = new Graph();
 		assertEquals(false, graph.isComplete());
 		
 	}
+	
+	@Test
+	public void merge() {
+		Graph graph = new Graph();
+		
+		for( int i = 0; i< 5; i++) {
+			Vertex v = new Vertex("v"+i);
+			graph.addVertex(v);
+		}
+		Vertex v1 = graph.getVertexes().get(1);
+		Vertex v2 = graph.getVertexes().get(2);
+		assertEquals( false, v1.isAdjacent(v2));
+		
+		for( int i = 0; i< 3; i++) {
+			Edge e = new Edge(graph.getVertex(i), graph.getVertex(i+2));
+			graph.addEdge(e);
+			graph.getVertex(i).addAdjacent(e);
+			graph.getVertex(i+2).addAdjacent(e);
+		}
+		
+		assertEquals( true, graph.getVertex(0).isAdjacent(graph.getVertex(2)));
+		assertEquals( false, graph.getVertex(0).isAdjacent(graph.getVertex(1)));
+		
+		graph.mergeVertexes(graph.getVertex(0), graph.getVertex(3));
+		assertEquals( true, graph.getVertex(0).isAdjacent(graph.getVertex(1)));
+		
+	}
+	
+	@Test
+	public void nonAdjacents() {
+		Graph graph = new Graph();
+		
+		for( int i = 0; i< 5; i++) {
+			Vertex v = new Vertex("v"+i);
+			graph.addVertex(v);
+		}
+		Vertex[] vertexes = graph.getNonAdjacentVertexes();
+		assertEquals( false, vertexes[0].isAdjacent(vertexes[1]));
+		
+		for( int i = 0; i< 3; i++) {
+			graph.addEdge( graph.getVertex(i), graph.getVertex(i+2));
+		}
+		vertexes = graph.getNonAdjacentVertexes();
+		assertEquals( false, vertexes[0].isAdjacent(vertexes[1]));
+		
+		assertEquals( true, graph.getVertex(0).isAdjacent(graph.getVertex(2)));
+		assertEquals( false, graph.getVertex(0).isAdjacent(graph.getVertex(1)));
+		
+		graph.mergeVertexes(graph.getVertex(0), graph.getVertex(3));
+		assertEquals( true, graph.getVertex(0).isAdjacent(graph.getVertex(1)));
+		vertexes = graph.getNonAdjacentVertexes();
+		assertEquals( false, vertexes[0].isAdjacent(vertexes[1]));
+		
+	}
 
 }
