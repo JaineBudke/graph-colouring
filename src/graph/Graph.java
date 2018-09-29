@@ -393,7 +393,18 @@ public class Graph implements Cloneable, Serializable {
 	 */
 	public boolean isComplete() {
 		
-		for( int i = 0; i < vertexList.size(); i++) {
+		
+		int n = vertexList.size(); 
+		for( int i=0; i< n; i++ ){
+			
+			int nAdj = vertexList.get(i).getAdjacentVertexes().size();
+			if( nAdj != n-1 ){
+				return false;
+			}
+			
+		}
+		
+		/*for( int i = 0; i < vertexList.size(); i++) {
 			for(int j = 0; j < vertexList.size(); j++) {
 				if(i != j) {
 					// Para cada vértice, verifica se todos os 
@@ -405,9 +416,10 @@ public class Graph implements Cloneable, Serializable {
 					}
 				}
 			}
-		}
+		}*/
 		
 		return true;
+		
 	}
 
 	/**
