@@ -86,6 +86,38 @@ public class ZykovTest {
 		assertEquals(6, k);
 	}
 	
+	@Test
+	public void test4() {
+		Engine engine = new Engine( );
+		ZykovAlgorithm zykov = new ZykovAlgorithm();
+		
+		////myciel3.col		
+		// lê arquivo com o índice indicado
+		engine.readArchivebyFilename("myciel6.col");
+		// cria o grafo
+		Graph graph = engine.createGraph();
+		
+		// executa algoritmo de coloração
+		int k = zykov.executeZykov(graph);
+		assertEquals(7, k);
+	}
+	
+	@Test
+	public void test5() {
+		Engine engine = new Engine( );
+		ZykovAlgorithm zykov = new ZykovAlgorithm();
+		
+		////myciel3.col		
+		// lê arquivo com o índice indicado
+		engine.readArchivebyFilename("myciel7.col");
+		// cria o grafo
+		Graph graph = engine.createGraph();
+		
+		// executa algoritmo de coloração
+		int k = zykov.executeZykov(graph);
+		assertEquals(8, k);
+	}
+	
 	
 
 }
