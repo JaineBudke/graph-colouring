@@ -46,6 +46,18 @@ public class Graph implements Cloneable, Serializable {
 	public void addEdge( Edge e ){	
 		edgeList.add(e);
 	}
+	
+	/**
+	 * Método para adicionar nova aresta do grafo
+	 * @param v1
+	 * @param v2
+	 */
+	public void addEdge( Vertex v1, Vertex v2 ){	
+		Edge e = new Edge(v1, v2);
+		edgeList.add(e);
+		v1.addAdjacent(e);
+		v2.addAdjacent(e);
+	}
 
 	/**
 	 * Método para adicionar novo vértice do grafo
@@ -289,7 +301,7 @@ public class Graph implements Cloneable, Serializable {
 				addEdge(edge);
 
 				// atualiza lista de adjacencia de v1
-				adjacentsV1.add(edge);
+				v1.addAdjacent(edge);
 				vAdV2.addAdjacent(edge);
 			}
 
@@ -375,6 +387,65 @@ public class Graph implements Cloneable, Serializable {
 		
 		return true;
 	}
+	/**
+	 * Verifica se o grafo é completo
+	 * @return Verdadeiro, se o grafo é completo. Falso caso contrario.
+	 */
+	public boolean isComplete() {
+		
+		
+		int n = vertexList.size(); 
+		for( int i=0; i< n; i++ ){
+			
+			int nAdj = vertexList.get(i).getAdjacentVertexes().size();
+			if( nAdj != n-1 ){
+				return false;
+			}
+			
+		}
+		
+		/*for( int i = 0; i < vertexList.size(); i++) {
+			for(int j = 0; j < vertexList.size(); j++) {
+				if(i != j) {
+					// Para cada vértice, verifica se todos os 
+					// outros são adjacentes a ele
+					Vertex v1 = vertexList.get(i);
+					Vertex v2 = vertexList.get(j);
+					if( !v1.isAdjacent(v2)) {
+						return false;
+					}
+				}
+			}
+		}*/
+		
+		return true;
+		
+	}
+
+	/**
+	 * Recupera dois vértices que não são adjacente
+	 * @return
+	 */
+	public Vertex[] getNonAdjacentVertexes() {
+		Vertex[] vertexes = new Vertex[2];
+		for( int i = 0; i < vertexList.size(); i++) {
+			for(int j = 0; j < vertexList.size(); j++) {
+				if(i != j) {
+					// Para cada vértice, verifica se todos os 
+					// outros são adjacentes a ele
+					vertexes[0] = vertexList.get(i);
+					vertexes[1] = vertexList.get(j);
+					if( !vertexes[0].isAdjacent(vertexes[1])) {
+						return vertexes;
+					}
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	
 
 
 }

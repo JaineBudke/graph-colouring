@@ -10,12 +10,13 @@ import graph.Graph;
 import graph.Vertex;
 import manager.Engine;
 
-public class BrownTest {
+public class ZykovTest {
+	
 	
 	@Test
-	public void a() {
+	public void test() {
 		Engine engine = new Engine( );
-		Brown_algorithm brown = new Brown_algorithm();
+		ZykovAlgorithm zykov = new ZykovAlgorithm();
 		
 		// Cria grafo
 		Vertex v1 = new Vertex("v1");
@@ -33,46 +34,14 @@ public class BrownTest {
 		
 		
 		// executa algoritmo de coloração
-		int k = brown.executeBrown(graph);
+		int k = zykov.executeZykov(graph);
 		assertEquals(2, k);
-	}
-	
-	@Test
-	public void test() {
-		Engine engine = new Engine( );
-		Brown_algorithm brown = new Brown_algorithm();
-		
-		////myciel3.col		
-		// lê arquivo com o índice indicado
-		engine.readArchivebyFilename("myciel4.col");
-		// cria o grafo
-		Graph graph = engine.createGraph();
-		
-		// executa algoritmo de coloração
-		int k = brown.executeBrown(graph);
-		assertEquals(5, k);
 	}
 	
 	@Test
 	public void test1() {
 		Engine engine = new Engine( );
-		Brown_algorithm brown = new Brown_algorithm();
-		
-		////myciel3.col		
-		// lê arquivo com o índice indicado
-		engine.readArchivebyFilename("myciel5.col");
-		// cria o grafo
-		Graph graph = engine.createGraph();
-		
-		// executa algoritmo de coloração
-		int k = brown.executeBrown(graph);
-		assertEquals(6, k);
-	}
-	
-	@Test
-	public void test2() {
-		Engine engine = new Engine( );
-		Brown_algorithm brown = new Brown_algorithm();
+		ZykovAlgorithm zykov = new ZykovAlgorithm();
 		
 		////myciel3.col		
 		// lê arquivo com o índice indicado
@@ -81,14 +50,46 @@ public class BrownTest {
 		Graph graph = engine.createGraph();
 		
 		// executa algoritmo de coloração
-		int k = brown.executeBrown(graph);
+		int k = zykov.executeZykov(graph);
 		assertEquals(4, k);
+	}
+	
+	@Test
+	public void test2() {
+		Engine engine = new Engine( );
+		ZykovAlgorithm zykov = new ZykovAlgorithm();
+		
+		////myciel3.col		
+		// lê arquivo com o índice indicado
+		engine.readArchivebyFilename("myciel4.col");
+		// cria o grafo
+		Graph graph = engine.createGraph();
+		
+		// executa algoritmo de coloração
+		int k = zykov.executeZykov(graph);
+		assertEquals(5, k);
 	}
 	
 	@Test
 	public void test3() {
 		Engine engine = new Engine( );
-		Brown_algorithm brown = new Brown_algorithm();
+		ZykovAlgorithm zykov = new ZykovAlgorithm();
+		
+		////myciel3.col		
+		// lê arquivo com o índice indicado
+		engine.readArchivebyFilename("myciel5.col");
+		// cria o grafo
+		Graph graph = engine.createGraph();
+		
+		// executa algoritmo de coloração
+		int k = zykov.executeZykov(graph);
+		assertEquals(6, k);
+	}
+	
+	@Test
+	public void test4() {
+		Engine engine = new Engine( );
+		ZykovAlgorithm zykov = new ZykovAlgorithm();
 		
 		////myciel3.col		
 		// lê arquivo com o índice indicado
@@ -97,14 +98,14 @@ public class BrownTest {
 		Graph graph = engine.createGraph();
 		
 		// executa algoritmo de coloração
-		int k = brown.executeBrown(graph);
+		int k = zykov.executeZykov(graph);
 		assertEquals(7, k);
 	}
 	
 	@Test
-	public void test4() {
+	public void test5() {
 		Engine engine = new Engine( );
-		Brown_algorithm brown = new Brown_algorithm();
+		ZykovAlgorithm zykov = new ZykovAlgorithm();
 		
 		////myciel3.col		
 		// lê arquivo com o índice indicado
@@ -113,8 +114,10 @@ public class BrownTest {
 		Graph graph = engine.createGraph();
 		
 		// executa algoritmo de coloração
-		int k = brown.executeBrown(graph);
+		int k = zykov.executeZykov(graph);
 		assertEquals(8, k);
 	}
+	
+	
 
 }
