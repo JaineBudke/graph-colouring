@@ -21,6 +21,7 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 	private String label; 
 	private String color;
 	private ArrayList<Edge> adjacents; // lista de adjacencia do vertice
+	private int saturation;
 	
 	private static final Logger LOGGER = Logger.getLogger( Vertex.class.getName() );
 	
@@ -29,6 +30,7 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 		this.label = label;
 		this.adjacents = new ArrayList<Edge>();
 		this.color = null;
+		this.saturation = 0;
 	}
 
 	/**
@@ -85,6 +87,25 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 		this.color = color;
 	}
 	
+	
+	/**
+	 * @return the saturation
+	 */
+	public int getSaturation() {
+		return saturation;
+	}
+
+	/**
+	 * @param saturation the saturation to set
+	 */
+	public void setSaturation(int saturation) {
+		this.saturation = saturation;
+	}
+	
+	public void increaseSaturation(){
+		this.saturation += 1;
+	}
+
 	/**
 	 * Compara graus dois vértices.
 	 * @param v2 Vértice a ser comparado.
@@ -100,6 +121,7 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
         }
         return 0;
     }
+	
 	
 	/**
 	 * Verifica se dois vértices são iguais

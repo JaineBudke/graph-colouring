@@ -1,6 +1,7 @@
 package view;
 
 import manager.Engine;
+import exact_algorithms.BrownDsaturAlgorithm;
 import exact_algorithms.Brown_algorithm;
 import exact_algorithms.ZykovAlgorithm;
 import graph.Graph;
@@ -14,6 +15,7 @@ public class Main {
 		Brown_algorithm brown = new Brown_algorithm();
 		
 		ZykovAlgorithm zykov = new ZykovAlgorithm();
+		BrownDsaturAlgorithm dsatur = new BrownDsaturAlgorithm();
 		
 		// lê arquivo com o índice indicado
 		engine.readArchivebyFilename("myciel3.col");
@@ -21,8 +23,11 @@ public class Main {
 		Graph graph = engine.createGraph();
 		
 		// executa algoritmo de coloração
-		int k = zykov.executeZykov(graph);
-		System.out.println("Número cromático do grafo: "+k);
+		//int k = zykov.executeZykov(graph);
+		//System.out.println("Número cromático do grafo: "+k);
+		
+		
+		
 		
 	}
 

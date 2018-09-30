@@ -128,10 +128,10 @@ public class Brown_algorithm {
 		
 		
 		// clonando grafo, vertices e arestas
-		graphTemp = graph.clone();
+		//graphTemp = graph.clone();
 
 		// recuperando vertices
-		vertexes = graphTemp.getVertexes();
+		vertexes = graph.getVertexes();
 
 		// ordena lista de vertices pelo grau
 		orderByDegree(vertexes);
