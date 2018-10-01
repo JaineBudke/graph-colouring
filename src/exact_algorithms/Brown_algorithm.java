@@ -3,10 +3,12 @@ package exact_algorithms;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.logging.Logger;
 
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
+import manager.Engine;
 
 
 public class Brown_algorithm {
@@ -31,7 +33,9 @@ public class Brown_algorithm {
 	
 	private ArrayList<Vertex> bestColouring;
 	
+	private static final Logger LOGGER = Logger.getLogger( Brown_algorithm.class.getName() );
 	
+	private int nodes = 1;
 	
 
 	/**
@@ -181,7 +185,7 @@ public class Brown_algorithm {
 				String color = U.get(i).get(0); // Recupera cor mínima da lista de cores possíveis		
 				vertexes.get(i).setColor(color); // Atribui cor ao vértice examinado 
 				U.get(i).remove(0); // remove cor de Ui
-				
+				nodes++;
 				int j = Integer.parseInt(color);
 				
 				// Se a cor j é menor do que o limitante superior k então
@@ -229,7 +233,8 @@ public class Brown_algorithm {
 			}
 			
 		}
-		
+		LOGGER.info("cor:"+k);
+		LOGGER.info("nos:"+nodes);
 		return k;
 		
 		

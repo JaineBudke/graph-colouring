@@ -9,6 +9,7 @@ public class ZykovAlgorithm {
 	
 	private int q;
 	private Graph graph;
+	private int nodes;
 	
 	private static final Logger LOGGER = Logger.getLogger( ZykovAlgorithm.class.getName() );
 	
@@ -23,7 +24,7 @@ public class ZykovAlgorithm {
 			Vertex[] vertexes = new Vertex[2];
 			vertexes = graphTemp.getNonAdjacentVertexes();
 			if(vertexes != null) {
-
+				nodes++;
 				//Contrai vertices
 				Graph graphCon = graphTemp;
 				graphCon.mergeVertexes(graphCon.findVertexFromLabel(vertexes[0].getLabel()), graphCon.findVertexFromLabel(vertexes[1].getLabel()));
@@ -45,8 +46,11 @@ public class ZykovAlgorithm {
 		graph = graphTemp;
 		//recupera o numero cromatico do grafo
 		q = graph.getVertexes().size();
+		nodes = 0;
 		cor(graph);
 		
+		LOGGER.info("cor:"+q);
+		LOGGER.info("nos:"+nodes);
 		return q;
 	}
 
