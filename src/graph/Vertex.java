@@ -143,7 +143,7 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 	 * Cria cópia do vértice através da serialização.
 	 * @return Cópia do vértice
 	 */
-	@Override
+	/*@Override
 	public Vertex clone()
 	{
 		Vertex object = null;
@@ -172,7 +172,7 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 		} 
 		
 		return object;
-	}
+	}*/
 	
 	
 

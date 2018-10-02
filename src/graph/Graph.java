@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -198,13 +200,42 @@ public class Graph implements Cloneable, Serializable {
 
 
 
-
+	
 	/**
 	 * Cria cópia do grafo através da serialização.
 	 * @return Cópia do grafo
 	 */
-	@Override
-	public Graph clone()
+	public Graph clone() {
+		Graph cloneGraph = new Graph();
+		
+		for( int i=0; i<vertexList.size(); i++ ){
+			Vertex v = new Vertex( vertexList.get(i).getLabel() );
+			v.setColor( vertexList.get(i).getColor() );
+			cloneGraph.addVertex(v);
+		}
+		
+		for( int j=0; j<edgeList.size(); j++ ){
+			String lO = edgeList.get(j).getOrigin().getLabel();
+			String lD = edgeList.get(j).getDestination().getLabel();
+			
+			Vertex o = cloneGraph.findVertexFromLabel(lO);
+			Vertex d = cloneGraph.findVertexFromLabel(lD);
+
+			Edge e = new Edge(o,d);
+			
+			cloneGraph.addEdge(e);
+			cloneGraph.findVertexFromLabel(lO).addAdjacent( e );
+			cloneGraph.findVertexFromLabel(lD).addAdjacent( e );
+			
+		}
+		
+        
+		return cloneGraph;
+		
+		
+	}
+	//@Override
+	/*public Graph clone()
 	{
 		Graph object = null;
 		//try-with-resources
@@ -231,8 +262,9 @@ public class Graph implements Cloneable, Serializable {
 			LOGGER.info(e.getMessage());
 		} 
 		return object;
-	}
-
+	}*/
+	
+	
 	/**
 	 * Remove vertice do grafo, retirando arestas;
 	 * @param v Vértice a ser removido
@@ -263,7 +295,6 @@ public class Graph implements Cloneable, Serializable {
 				edges.remove();
 			}
 		}
-
 
 		vertexList.remove( v );
 	}
