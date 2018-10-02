@@ -152,15 +152,13 @@ public class Engine {
 
 					Edge edge = new Edge( v1, v2 );
 					
-					if( graph.containsEdge(edge) == null ) {
-						graph.addEdge(edge);
-						v1.addAdjacent(edge);
-						v2.addAdjacent(edge);
+					if( !v1.isAdjacent(v2) ) {
+						graph.addEdge(v1, v2);
 						
 					} else {
 						// aumenta o peso da aresta
-						Edge e = graph.containsEdge(edge);
-						e.increaseWeight();
+						//Edge e = graph.containsEdge(edge);
+						//e.increaseWeight();
 					}
 
 				}

@@ -24,7 +24,7 @@ import graph.Vertex;
 public class Graph implements Cloneable, Serializable {
 
 	private ArrayList<Vertex> vertexList;
-	private ArrayList<Edge> edgeList;
+	//private ArrayList<Edge> edgeList;
 	private int chromaticNumber;
 
 	private static final Logger LOGGER = Logger.getLogger( Graph.class.getName() );
@@ -36,16 +36,16 @@ public class Graph implements Cloneable, Serializable {
 	 */
 	public Graph( ){
 		vertexList = new ArrayList<Vertex>();
-		edgeList = new ArrayList<Edge>();
+		//edgeList = new ArrayList<Edge>();
 	}
 
 	/**
 	 * Método para adicionar nova aresta do grafo
 	 * @param e Aresta a ser adicionada
-	 */
+	 *
 	public void addEdge( Edge e ){	
 		edgeList.add(e);
-	}
+	}*/
 	
 	/**
 	 * Método para adicionar nova aresta do grafo
@@ -54,7 +54,7 @@ public class Graph implements Cloneable, Serializable {
 	 */
 	public void addEdge( Vertex v1, Vertex v2 ){	
 		Edge e = new Edge(v1, v2);
-		edgeList.add(e);
+		//edgeList.add(e);
 		v1.addAdjacent(e);
 		v2.addAdjacent(e);
 	}
@@ -78,10 +78,10 @@ public class Graph implements Cloneable, Serializable {
 	/**
 	 * Retorna arestas do grafo
 	 * @return Lista de arestas do grafo
-	 */
+	 
 	public ArrayList<Edge> getEdges( ){	
 		return edgeList;
-	}
+	}*/
 
 	/**
 	 * Retorna vértices do grafo
@@ -105,14 +105,14 @@ public class Graph implements Cloneable, Serializable {
 
 	/**
 	 * Exibe todas as arestas do grafo
-	 */
+	 *
 	public void showEdgeList( ){
 
 		for( int i=0; i<edgeList.size(); i++ ){
 			edgeList.get(i).showEdge();
 		}
 
-	}
+	}*/
 
 	/**
 	 * Recupera número de cores do grafo
@@ -134,7 +134,7 @@ public class Graph implements Cloneable, Serializable {
 	 * Verifica de aresta está no grafo
 	 * @param e Aresta
 	 * @return Aresta se aresta está no grafo, null caso contrário
-	 */
+	 *
 	public Edge containsEdge( Edge e ){
 
 		for( int i=0; i<edgeList.size(); i++ ){
@@ -150,7 +150,7 @@ public class Graph implements Cloneable, Serializable {
 		}
 		return null;
 
-	}
+	}*/
 
 	/**
 	 * Verifica se vértice está no grafo
@@ -254,16 +254,6 @@ public class Graph implements Cloneable, Serializable {
 			}
 		}
 
-		//remove da lista de arestas
-		Iterator<Edge> edges = edgeList.iterator();
-		while( edges.hasNext()) {
-			Edge adj = edges.next();
-
-			if( adj.getVertex(v) != null ){
-				edges.remove();
-			}
-		}
-
 
 		vertexList.remove( v );
 	}
@@ -298,11 +288,11 @@ public class Graph implements Cloneable, Serializable {
 			//se o vAdV2 não for vizinho de v1, adiciona a aresta entre v1 e vAdV2
 			if (!isAdjacent) {
 				Edge edge = new Edge( v1, vAdV2 );
-				addEdge(edge);
+				addEdge(v1, vAdV2);
 
 				// atualiza lista de adjacencia de v1
-				v1.addAdjacent(edge);
-				vAdV2.addAdjacent(edge);
+				//v1.addAdjacent(edge);
+				//vAdV2.addAdjacent(edge);
 			}
 
 		}
@@ -337,9 +327,6 @@ public class Graph implements Cloneable, Serializable {
 		}
 
 
-		// remove aresta da lista de arestas
-		edgeList.remove( e );
-
 	}
 
 	/**
@@ -356,7 +343,7 @@ public class Graph implements Cloneable, Serializable {
 	/**
 	 * Retorna string que representa o grafo.
 	 * @return String
-	 */
+	 
 	@Override
 	public String toString() {
 
@@ -367,7 +354,7 @@ public class Graph implements Cloneable, Serializable {
 		
 		return bld.toString();
 
-	}
+	}*/
 	
 	/**
 	 * Verificar se a coloração de um grafo é valida

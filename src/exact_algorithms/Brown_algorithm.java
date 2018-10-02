@@ -132,7 +132,7 @@ public class Brown_algorithm {
 		
 		
 		// clonando grafo, vertices e arestas
-		graphTemp = graph.clone();
+		graphTemp = graph;
 
 		// recuperando vertices
 		vertexes = graphTemp.getVertexes();
@@ -185,7 +185,7 @@ public class Brown_algorithm {
 				String color = U.get(i).get(0); // Recupera cor mínima da lista de cores possíveis		
 				vertexes.get(i).setColor(color); // Atribui cor ao vértice examinado 
 				U.get(i).remove(0); // remove cor de Ui
-				nodes++;
+				
 				int j = Integer.parseInt(color);
 				
 				// Se a cor j é menor do que o limitante superior k então
@@ -220,6 +220,7 @@ public class Brown_algorithm {
 						i = i+1;
 						
 						atualizarU = true;
+						nodes++;
 						
 					}
 					

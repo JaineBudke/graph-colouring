@@ -27,23 +27,17 @@ public class GraphTest {
 		
 		assertEquals(true, graph.hasValidColoring());
 		
-		Edge e1 = new Edge(vertexes.get(0), vertexes.get(1));
-		graph.addEdge(e1);
-		vertexes.get(0).addAdjacent(e1);
-		vertexes.get(1).addAdjacent(e1);
+		graph.addEdge(vertexes.get(0), vertexes.get(1));
 		
 		
 		assertEquals(false, graph.hasValidColoring());
 		
 		// Testa grafo completo com cores diferentes
-		graph.getEdges().clear();
 		for(int i = 0; i < graph.getVertexes().size(); i++) {
 			graph.getVertex(i).setColor(i+"");
 			for( int j = i +1 ;j < graph.getVertexes().size(); j++) {
-				Edge e = new Edge(graph.getVertex(i), graph.getVertex(j));
-				graph.addEdge(e);
-				graph.getVertex(i).addAdjacent(e);
-				graph.getVertex(j).addAdjacent(e);
+
+				graph.addEdge(graph.getVertex(i), graph.getVertex(j));
 			}
 		}
 		
@@ -71,13 +65,9 @@ Graph graph = new Graph();
 		assertEquals(false, graph.isComplete());
 		
 		// Testa grafo completo com cores diferentes
-		graph.getEdges().clear();
 		for(int i = 0; i < graph.getVertexes().size(); i++) {
 			for( int j = i +1 ;j < graph.getVertexes().size(); j++) {
-				Edge e = new Edge(graph.getVertex(i), graph.getVertex(j));
-				graph.addEdge(e);
-				graph.getVertex(i).addAdjacent(e);
-				graph.getVertex(j).addAdjacent(e);
+				graph.addEdge(graph.getVertex(i), graph.getVertex(j));
 			}
 		}
 		
@@ -85,32 +75,24 @@ Graph graph = new Graph();
 		
 		// Testa com algums arestas
 		graph.getVertexes().clear();
-		graph.getEdges().clear();
 		for( int i = 0; i< 10; i++) {
 			Vertex v = new Vertex("v"+i);
 			graph.addVertex(v);
 		}
 		
 		for( int i = 0; i< 5; i++) {
-			Edge e = new Edge(graph.getVertex(i), graph.getVertex(i+5));
-			graph.addEdge(e);
-			graph.getVertex(i).addAdjacent(e);
-			graph.getVertex(i+5).addAdjacent(e);
+			graph.addEdge(graph.getVertex(i), graph.getVertex(i+5));
 		}
 		
 		assertEquals(false, graph.isComplete());
 		
 		// Testa com uma aresta
 		graph.getVertexes().clear();
-		graph.getEdges().clear();
 		for( int i = 0; i< 5; i++) {
 			Vertex v = new Vertex("v"+i);
 			graph.addVertex(v);
 		}
-		Edge e = new Edge(graph.getVertex(0), graph.getVertex(4));
-		graph.addEdge(e);
-		graph.getVertex(0).addAdjacent(e);
-		graph.getVertex(4).addAdjacent(e);
+		graph.addEdge(graph.getVertex(0), graph.getVertex(4));
 		assertEquals(false, graph.isComplete());
 		
 	}
@@ -128,10 +110,7 @@ Graph graph = new Graph();
 		assertEquals( false, v1.isAdjacent(v2));
 		
 		for( int i = 0; i< 3; i++) {
-			Edge e = new Edge(graph.getVertex(i), graph.getVertex(i+2));
-			graph.addEdge(e);
-			graph.getVertex(i).addAdjacent(e);
-			graph.getVertex(i+2).addAdjacent(e);
+			graph.addEdge(graph.getVertex(i), graph.getVertex(i+2));
 		}
 		
 		assertEquals( true, graph.getVertex(0).isAdjacent(graph.getVertex(2)));
@@ -166,6 +145,14 @@ Graph graph = new Graph();
 		assertEquals( true, graph.getVertex(0).isAdjacent(graph.getVertex(1)));
 		vertexes = graph.getNonAdjacentVertexes();
 		assertEquals( false, vertexes[0].isAdjacent(vertexes[1]));
+		
+		graph = new Graph();
+		Vertex v1 = new Vertex("v1");
+		Vertex v2 = new Vertex("v2");
+		graph.addEdge(v1, v2);
+		assertEquals( true, graph.isComplete());
+		
+		
 		
 	}
 

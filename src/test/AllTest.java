@@ -13,7 +13,7 @@ import manager.Engine;
 public class AllTest {
 
 	@Test
-	public void test1z() {
+	public void testZykov() {
 		Engine engine = new Engine( );
 		ZykovAlgorithm zykov = new ZykovAlgorithm();
 		
@@ -28,7 +28,7 @@ public class AllTest {
 	}
 	
 	@Test
-	public void test2z() {
+	public void test2Zykov() {
 		Engine engine = new Engine( );
 		ZykovAlgorithm zykov = new ZykovAlgorithm();
 		
@@ -43,7 +43,7 @@ public class AllTest {
 	}
 	
 	@Test
-	public void test3z() {
+	public void test3Zykov() {
 		Engine engine = new Engine( );
 		ZykovAlgorithm zykov = new ZykovAlgorithm();
 		
@@ -58,7 +58,7 @@ public class AllTest {
 	}
 	
 	@Test
-	public void test4z() {
+	public void test4Zykov() {
 		Engine engine = new Engine( );
 		ZykovAlgorithm zykov = new ZykovAlgorithm();
 		
@@ -73,7 +73,7 @@ public class AllTest {
 	}
 	
 	@Test
-	public void test5() {
+	public void test5Zykov() {
 		Engine engine = new Engine( );
 		ZykovAlgorithm zykov = new ZykovAlgorithm();
 		
@@ -86,41 +86,8 @@ public class AllTest {
 		// executa algoritmo de coloração
 		int k = zykov.executeZykov(graph);
 	}
-	
 	@Test
-	public void test() {
-		Engine engine = new Engine( );
-		Brown_algorithm brown = new Brown_algorithm();
-		
-		////myciel3.col		
-		// lê arquivo com o índice indicado
-		engine.readArchivebyFilename("myciel4.col");
-		// cria o grafo
-		Graph graph = engine.createGraph();
-		
-		// executa algoritmo de coloração
-		int k = brown.executeBrown(graph);
-		//assertEquals(5, k);
-	}
-	
-	@Test
-	public void test1() {
-		Engine engine = new Engine( );
-		Brown_algorithm brown = new Brown_algorithm();
-		
-		////myciel3.col		
-		// lê arquivo com o índice indicado
-		engine.readArchivebyFilename("myciel5.col");
-		// cria o grafo
-		Graph graph = engine.createGraph();
-		
-		// executa algoritmo de coloração
-		int k = brown.executeBrown(graph);
-		//assertEquals(6, k);
-	}
-	
-	@Test
-	public void test2() {
+	public void testBrown() {
 		Engine engine = new Engine( );
 		Brown_algorithm brown = new Brown_algorithm();
 		
@@ -136,7 +103,39 @@ public class AllTest {
 	}
 	
 	@Test
-	public void test3() {
+	public void test2Brown() {
+		Engine engine = new Engine( );
+		Brown_algorithm brown = new Brown_algorithm();
+		
+		////myciel3.col		
+		// lê arquivo com o índice indicado
+		engine.readArchivebyFilename("myciel4.col");
+		// cria o grafo
+		Graph graph = engine.createGraph();
+		
+		// executa algoritmo de coloração
+		int k = brown.executeBrown(graph);
+		//assertEquals(5, k);
+	}
+	
+	@Test
+	public void test3Brown() {
+		Engine engine = new Engine( );
+		Brown_algorithm brown = new Brown_algorithm();
+		
+		////myciel3.col		
+		// lê arquivo com o índice indicado
+		engine.readArchivebyFilename("myciel5.col");
+		// cria o grafo
+		Graph graph = engine.createGraph();
+		
+		// executa algoritmo de coloração
+		int k = brown.executeBrown(graph);
+		//assertEquals(6, k);
+	}
+	
+	@Test
+	public void test4Brown() {
 		Engine engine = new Engine( );
 		Brown_algorithm brown = new Brown_algorithm();
 		
@@ -152,7 +151,7 @@ public class AllTest {
 	}
 	
 	@Test
-	public void test4() {
+	public void test5Brown() {
 		Engine engine = new Engine( );
 		Brown_algorithm brown = new Brown_algorithm();
 		
