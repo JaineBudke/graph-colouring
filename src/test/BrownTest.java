@@ -35,6 +35,7 @@ public class BrownTest {
 		// executa algoritmo de coloração
 		int k = brown.executeBrown(graph);
 		assertEquals(2, k);
+		assertEquals(true, graph.hasValidColoring());
 	}
 	
 	@Test
@@ -51,6 +52,8 @@ public class BrownTest {
 		// executa algoritmo de coloração
 		int k = brown.executeBrown(graph);
 		assertEquals(4, k);
+
+		assertEquals(true, graph.hasValidColoring());
 	}
 	
 	@Test
@@ -67,6 +70,8 @@ public class BrownTest {
 		// executa algoritmo de coloração
 		int k = brown.executeBrown(graph);
 		assertEquals(5, k);
+
+		assertEquals(true, graph.hasValidColoring());
 	}
 	
 	@Test
@@ -83,6 +88,8 @@ public class BrownTest {
 		// executa algoritmo de coloração
 		int k = brown.executeBrown(graph);
 		assertEquals(6, k);
+
+		assertEquals(true, graph.hasValidColoring());
 	}
 	
 	@Test
@@ -99,6 +106,8 @@ public class BrownTest {
 		// executa algoritmo de coloração
 		int k = brown.executeBrown(graph);
 		assertEquals(7, k);
+
+		assertEquals(true, graph.hasValidColoring());
 	}
 	
 	@Test
@@ -115,6 +124,8 @@ public class BrownTest {
 		// executa algoritmo de coloração
 		int k = brown.executeBrown(graph);
 		assertEquals(8, k);
+
+		assertEquals(true, graph.hasValidColoring());
 	}
 
 }
