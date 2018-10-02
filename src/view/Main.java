@@ -22,6 +22,9 @@ public class Main {
 		
 		// executa algoritmo de coloração
 		int k = zykov.executeZykov(graph);
+		
+		//int k = brown.executeBrown(graph);
+		System.out.println(zykov.cont);
 		System.out.println("Número cromático do grafo: "+k);
 		
 	}

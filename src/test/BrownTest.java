@@ -44,6 +44,22 @@ public class BrownTest {
 		
 		////myciel3.col		
 		// lê arquivo com o índice indicado
+		engine.readArchivebyFilename("myciel3.col");
+		// cria o grafo
+		Graph graph = engine.createGraph();
+		
+		// executa algoritmo de coloração
+		int k = brown.executeBrown(graph);
+		assertEquals(4, k);
+	}
+	
+	@Test
+	public void test1() {
+		Engine engine = new Engine( );
+		Brown_algorithm brown = new Brown_algorithm();
+		
+		////myciel3.col		
+		// lê arquivo com o índice indicado
 		engine.readArchivebyFilename("myciel4.col");
 		// cria o grafo
 		Graph graph = engine.createGraph();
@@ -54,7 +70,7 @@ public class BrownTest {
 	}
 	
 	@Test
-	public void test1() {
+	public void test2() {
 		Engine engine = new Engine( );
 		Brown_algorithm brown = new Brown_algorithm();
 		
@@ -67,22 +83,6 @@ public class BrownTest {
 		// executa algoritmo de coloração
 		int k = brown.executeBrown(graph);
 		assertEquals(6, k);
-	}
-	
-	@Test
-	public void test2() {
-		Engine engine = new Engine( );
-		Brown_algorithm brown = new Brown_algorithm();
-		
-		////myciel3.col		
-		// lê arquivo com o índice indicado
-		engine.readArchivebyFilename("myciel3.col");
-		// cria o grafo
-		Graph graph = engine.createGraph();
-		
-		// executa algoritmo de coloração
-		int k = brown.executeBrown(graph);
-		assertEquals(4, k);
 	}
 	
 	@Test

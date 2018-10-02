@@ -49,7 +49,6 @@ public class Engine {
 			String linha = lerArq.readLine(); // lê a primeira linha
 			
 			int p = 0;
-			System.out.println("Linha " + p + "lida");
 			p++;
 			
 			while ( linha != null ) {

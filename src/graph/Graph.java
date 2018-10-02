@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -198,13 +200,41 @@ public class Graph implements Cloneable, Serializable {
 
 
 
-
+	
 	/**
 	 * Cria cópia do grafo através da serialização.
 	 * @return Cópia do grafo
 	 */
-	@Override
-	public Graph clone()
+	public Graph clone() {
+		Graph cloneGraph = new Graph();
+		
+		for( int i=0; i<vertexList.size(); i++ ){
+			Vertex v = new Vertex( vertexList.get(i).getLabel() );
+			v.setColor( vertexList.get(i).getColor() );
+			cloneGraph.addVertex(v);
+		}
+		
+		for( int i=0; i<vertexList.size(); i++ ){
+			
+			for( Edge adj : vertexList.get(i).getAdjacentVertexes()) {
+				Vertex o = cloneGraph.findVertexFromLabel(adj.getOrigin().getLabel());
+				Vertex d = cloneGraph.findVertexFromLabel(adj.getDestination().getLabel());
+				if( !o.isAdjacent(d)) {
+					Edge e = new Edge(o, d);
+					o.addAdjacent(e);
+					d.addAdjacent(e);
+				}
+				
+			}
+		}
+		
+        
+		return cloneGraph;
+		
+		
+	}
+	//@Override
+	/*public Graph clone()
 	{
 		Graph object = null;
 		//try-with-resources
@@ -231,8 +261,9 @@ public class Graph implements Cloneable, Serializable {
 			LOGGER.info(e.getMessage());
 		} 
 		return object;
-	}
-
+	}*/
+	
+	
 	/**
 	 * Remove vertice do grafo, retirando arestas;
 	 * @param v Vértice a ser removido
@@ -253,7 +284,6 @@ public class Graph implements Cloneable, Serializable {
 				}
 			}
 		}
-
 
 		vertexList.remove( v );
 	}
@@ -343,18 +373,18 @@ public class Graph implements Cloneable, Serializable {
 	/**
 	 * Retorna string que representa o grafo.
 	 * @return String
-	 
+	 */
 	@Override
 	public String toString() {
 
 		StringBuilder bld = new StringBuilder();
-		for( Edge e : edgeList) {
+		for( Vertex e : vertexList) {
 			bld.append(e.toString() + "\n");
 		}
 		
 		return bld.toString();
 
-	}*/
+	}
 	
 	/**
 	 * Verificar se a coloração de um grafo é valida
@@ -385,7 +415,7 @@ public class Graph implements Cloneable, Serializable {
 		for( int i=0; i< n; i++ ){
 			
 			int nAdj = vertexList.get(i).getAdjacentVertexes().size();
-			if( nAdj != n-1 ){
+			if( nAdj < n-1 ){
 				return false;
 			}
 			

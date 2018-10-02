@@ -12,6 +12,8 @@ public class ZykovAlgorithm {
 	private Graph graph;
 	private int nodes;
 	
+	public int cont=0;
+	
 	private static final Logger LOGGER = Logger.getLogger( ZykovAlgorithm.class.getName() );
 	
 	
@@ -21,31 +23,31 @@ public class ZykovAlgorithm {
 		
 		if(graphTemp.isComplete()) {
 			q = Math.min(n, q);
-			//LOGGER.info("Grafo completo");
+		
 		} else {
+			
 			Vertex[] vertexes = new Vertex[2];
 			vertexes = graphTemp.getNonAdjacentVertexes();
+			
 			if(vertexes != null) {
-				//Inicia caminho de adição de arestas
-				Graph graphAdd = graphTemp.clone();
-				Edge e = new Edge(graphAdd.findVertexFromLabel(vertexes[0].getLabel()),  graphAdd.findVertexFromLabel(vertexes[1].getLabel()));
-
-				Vertex v1 = graphAdd.findVertexFromLabel(vertexes[0].getLabel());
-				Vertex v2 = graphAdd.findVertexFromLabel(vertexes[1].getLabel());
-				graphAdd.mergeVertexes(v1, v2);
-				
-				//LOGGER.info("Adiciona aresta entre " + vertexes[0].getLabel() + " e " + vertexes[1].getLabel());
-				cor(graphAdd);
 				
 				//Contrai vertices
-				Graph graphCon = graphTemp.clone();
+				Graph graphCon = (Graph) graphTemp.clone();
 				graphCon.mergeVertexes(graphCon.findVertexFromLabel(vertexes[0].getLabel()), graphCon.findVertexFromLabel(vertexes[1].getLabel()));
 				//LOGGER.info("Contrai "  + vertexes[0].getLabel() + " e " + vertexes[1].getLabel());
 				cor( graphCon );
 				
+				//Inicia caminho de adição de arestas
+				Graph graphAdd = (Graph) graphTemp.clone();
+				Vertex v1 = graphAdd.findVertexFromLabel(vertexes[0].getLabel());
+				Vertex v2 = graphAdd.findVertexFromLabel(vertexes[1].getLabel());
+				graphAdd.addEdge(v1, v2);
 				
+				//LOGGER.info("Adiciona aresta entre " + vertexes[0].getLabel() + " e " + vertexes[1].getLabel());
+				cor(graphAdd);
 			}  
 		}
+		
 	}
 	
 	public int executeZykov(Graph graphTemp) {

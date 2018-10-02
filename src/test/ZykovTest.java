@@ -36,6 +36,8 @@ public class ZykovTest {
 		// executa algoritmo de coloração
 		int k = zykov.executeZykov(graph);
 		assertEquals(2, k);
+		//assertEquals(9, zykov.cont);
+
 	}
 	
 	@Test
@@ -51,7 +53,9 @@ public class ZykovTest {
 		
 		// executa algoritmo de coloração
 		int k = zykov.executeZykov(graph);
+		
 		assertEquals(4, k);
+		
 	}
 	
 	@Test
