@@ -1,5 +1,6 @@
 package exact_algorithms;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import graph.Graph;
@@ -10,6 +11,8 @@ public class ZykovAlgorithm {
 	private int q;
 	private Graph graph;
 	
+	public ArrayList<Vertex> bestColouring = new ArrayList<Vertex>();
+	
 	private static final Logger LOGGER = Logger.getLogger( ZykovAlgorithm.class.getName() );
 	
 	
@@ -18,6 +21,10 @@ public class ZykovAlgorithm {
 		
 		if(graphTemp.isComplete()) {
 			q = Math.min(n, q);
+			
+			bestColouring = graphTemp.getVertexes();
+			
+			
 			//LOGGER.info("Grafo completo");
 		} else {
 			Vertex[] vertexes = new Vertex[2];

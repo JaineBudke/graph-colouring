@@ -264,7 +264,7 @@ public class Graph implements Cloneable, Serializable {
 			}
 		}
 
-
+		
 		vertexList.remove( v );
 	}
 
@@ -307,6 +307,8 @@ public class Graph implements Cloneable, Serializable {
 
 		}
 
+		// adiciona v2 na lista de mesclados de v1
+		v1.addMergedVertex( v2 );
 
 		// remove da lista de vertices		
 		removeVertex( v2 );

@@ -21,6 +21,7 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 	private String label; 
 	private String color;
 	private ArrayList<Edge> adjacents; // lista de adjacencia do vertice
+	private ArrayList<Vertex> mergedVertexes; // lista de vertices mesclados
 	
 	private static final Logger LOGGER = Logger.getLogger( Vertex.class.getName() );
 	
@@ -28,6 +29,7 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 	public Vertex( String label ){
 		this.label = label;
 		this.adjacents = new ArrayList<Edge>();
+		this.mergedVertexes = new ArrayList<Vertex>();
 		this.color = null;
 	}
 
@@ -139,6 +141,21 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 		return false;
 	}
 	
+
+	/**
+	 * Adiciona vertice mesclado à lista
+	 */
+	public void addMergedVertex(Vertex v) {
+		mergedVertexes.add(v);
+	}
+
+	/**
+	 * @return Retorna lista de vertices mesclados
+	 */
+	public ArrayList<Vertex> getMergedVertexes() {
+		return mergedVertexes;
+	}
+
 	/**
 	 * Cria cópia do vértice através da serialização.
 	 * @return Cópia do vértice
