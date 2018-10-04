@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Random;
 import java.util.logging.Logger;
 
 import graph.Edge;
@@ -173,6 +175,38 @@ public class Engine {
 	}
 	
 	
-	
+	/**
+	 * Gera um grafo com numberVertex nós
+	 * @param numberVertex Numero de nós no grafo
+	 * @param density Densidade do grafo (0,1)
+	 * @return Grafo gerado
+	 */
+	public Graph generate(int numberVertex, double alpha) {
+
+		Graph newGraph = new Graph();
+
+		//preenche grafo
+		for(Integer i = 0; i < numberVertex; i++) {
+			Vertex v = new Vertex(  i.toString() );
+			newGraph.addVertex(v);
+		}
+
+		long seed = System.nanoTime();
+		Random ran = new Random(seed);
+		
+		for(Integer i = 0; i < numberVertex; i++) {
+			for(Integer j = 0; j < numberVertex; j++) {
+				if( i != j) {
+					if(ran.nextDouble() < alpha) {
+						Vertex v1 = newGraph.getVertex(i);
+						Vertex v2 = newGraph.getVertex(j);
+						newGraph.addEdge(v1, v2);
+					}
+				}
+			}
+		}
+
+		return newGraph;
+	}
 	
 }
