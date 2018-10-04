@@ -3,10 +3,12 @@ package exact_algorithms;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.logging.Logger;
 
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
+import manager.Engine;
 
 
 public class Brown_algorithm {
@@ -21,6 +23,7 @@ public class Brown_algorithm {
 	// Vetor contendo o conjunto de total de cores utilizadas por uma coloração parcial com i vértices coloridos
 	private ArrayList<Integer> L = new ArrayList<>();
 		
+	public int cont = 1;
 	
 	// q = color
 	private int q = 1;		
@@ -31,7 +34,9 @@ public class Brown_algorithm {
 	
 	private ArrayList<Vertex> bestColouring;
 	
+	private static final Logger LOGGER = Logger.getLogger( Brown_algorithm.class.getName() );
 	
+	private int nodes = 1;
 	
 
 	/**
@@ -128,10 +133,11 @@ public class Brown_algorithm {
 		
 		
 		// clonando grafo, vertices e arestas
-		graphTemp = graph.clone();
+
+		graphTemp = graph;
 
 		// recuperando vertices
-		vertexes = graphTemp.getVertexes();
+		vertexes = graph.getVertexes();
 
 		// ordena lista de vertices pelo grau
 		orderByDegree(vertexes);
@@ -216,6 +222,9 @@ public class Brown_algorithm {
 						i = i+1;
 						
 						atualizarU = true;
+						nodes++;
+						
+						cont++;
 						
 					}
 					
@@ -229,7 +238,8 @@ public class Brown_algorithm {
 			}
 			
 		}
-		
+		LOGGER.info("cor:"+k);
+		LOGGER.info("nos:"+nodes);
 		return k;
 		
 		

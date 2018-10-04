@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Random;
 import java.util.logging.Logger;
 
 import graph.Edge;
@@ -49,7 +51,6 @@ public class Engine {
 			String linha = lerArq.readLine(); // lê a primeira linha
 			
 			int p = 0;
-			System.out.println("Linha " + p + "lida");
 			p++;
 			
 			while ( linha != null ) {
@@ -99,7 +100,7 @@ public class Engine {
 		for (int i = 1; i <= index; i++) {
 			filename = listOfFiles.get(i).getName();
 		}**/
-		
+		LOGGER.info(filename);
 		
 		this.readArchive(absolutePath+"/src/data/" + filename);
 		
@@ -114,7 +115,7 @@ public class Engine {
 
 		graph = new Graph();
 
-		System.out.println("Gerando grafo");
+		//System.out.println("Gerando grafo");
 		
 		for( int student=0; student < students.size(); student++ ){ // percorre lista de estudantes
 			
@@ -135,14 +136,14 @@ public class Engine {
 				if( graph.containsVertex(vertex) == null ){
 					graph.addVertex(vertex);
 					vertexStudent[i] = vertex;
-					LOGGER.info("Adicionado vertice");
+					//LOGGER.info("Adicionado vertice");
 				} else {
 					vertexStudent[i] = graph.containsVertex(vertex);
 				}
 
 			}
 
-			LOGGER.info("Adiciona arestas");
+			//LOGGER.info("Adiciona arestas");
 			// adiciona arestas do estudante ao grafo
 			for( int j=0; j < lecturesStudent.size(); j++ ){ // percorre todas as aulas
 				for( int k=j+1; k < lecturesStudent.size(); k++ ){ // percorre as atividades a partir de j
@@ -152,15 +153,13 @@ public class Engine {
 
 					Edge edge = new Edge( v1, v2 );
 					
-					if( graph.containsEdge(edge) == null ) {
-						graph.addEdge(edge);
-						v1.addAdjacent(edge);
-						v2.addAdjacent(edge);
+					if( !v1.isAdjacent(v2) ) {
+						graph.addEdge(v1, v2);
 						
 					} else {
 						// aumenta o peso da aresta
-						Edge e = graph.containsEdge(edge);
-						e.increaseWeight();
+						//Edge e = graph.containsEdge(edge);
+						//e.increaseWeight();
 					}
 
 				}
@@ -176,6 +175,38 @@ public class Engine {
 	}
 	
 	
-	
+	/**
+	 * Gera um grafo com numberVertex nós
+	 * @param numberVertex Numero de nós no grafo
+	 * @param density Densidade do grafo (0,1)
+	 * @return Grafo gerado
+	 */
+	public Graph generate(int numberVertex, double alpha) {
+
+		Graph newGraph = new Graph();
+
+		//preenche grafo
+		for(Integer i = 0; i < numberVertex; i++) {
+			Vertex v = new Vertex(  i.toString() );
+			newGraph.addVertex(v);
+		}
+
+		long seed = System.nanoTime();
+		Random ran = new Random(seed);
+		
+		for(Integer i = 0; i < numberVertex; i++) {
+			for(Integer j = 0; j < numberVertex; j++) {
+				if( i != j) {
+					if(ran.nextDouble() < alpha) {
+						Vertex v1 = newGraph.getVertex(i);
+						Vertex v2 = newGraph.getVertex(j);
+						newGraph.addEdge(v1, v2);
+					}
+				}
+			}
+		}
+
+		return newGraph;
+	}
 	
 }

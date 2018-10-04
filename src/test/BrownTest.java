@@ -35,42 +35,11 @@ public class BrownTest {
 		// executa algoritmo de coloração
 		int k = brown.executeBrown(graph);
 		assertEquals(2, k);
+		assertEquals(true, graph.hasValidColoring());
 	}
 	
 	@Test
 	public void test() {
-		Engine engine = new Engine( );
-		Brown_algorithm brown = new Brown_algorithm();
-		
-		////myciel3.col		
-		// lê arquivo com o índice indicado
-		engine.readArchivebyFilename("myciel4.col");
-		// cria o grafo
-		Graph graph = engine.createGraph();
-		
-		// executa algoritmo de coloração
-		int k = brown.executeBrown(graph);
-		assertEquals(5, k);
-	}
-	
-	@Test
-	public void test1() {
-		Engine engine = new Engine( );
-		Brown_algorithm brown = new Brown_algorithm();
-		
-		////myciel3.col		
-		// lê arquivo com o índice indicado
-		engine.readArchivebyFilename("myciel5.col");
-		// cria o grafo
-		Graph graph = engine.createGraph();
-		
-		// executa algoritmo de coloração
-		int k = brown.executeBrown(graph);
-		assertEquals(6, k);
-	}
-	
-	@Test
-	public void test2() {
 		Engine engine = new Engine( );
 		Brown_algorithm brown = new Brown_algorithm();
 		
@@ -83,6 +52,44 @@ public class BrownTest {
 		// executa algoritmo de coloração
 		int k = brown.executeBrown(graph);
 		assertEquals(4, k);
+
+		assertEquals(true, graph.hasValidColoring());
+	}
+	
+	@Test
+	public void test1() {
+		Engine engine = new Engine( );
+		Brown_algorithm brown = new Brown_algorithm();
+		
+		////myciel3.col		
+		// lê arquivo com o índice indicado
+		engine.readArchivebyFilename("myciel4.col");
+		// cria o grafo
+		Graph graph = engine.createGraph();
+		
+		// executa algoritmo de coloração
+		int k = brown.executeBrown(graph);
+		assertEquals(5, k);
+
+		assertEquals(true, graph.hasValidColoring());
+	}
+	
+	@Test
+	public void test2() {
+		Engine engine = new Engine( );
+		Brown_algorithm brown = new Brown_algorithm();
+		
+		////myciel3.col		
+		// lê arquivo com o índice indicado
+		engine.readArchivebyFilename("myciel5.col");
+		// cria o grafo
+		Graph graph = engine.createGraph();
+		
+		// executa algoritmo de coloração
+		int k = brown.executeBrown(graph);
+		assertEquals(6, k);
+
+		assertEquals(true, graph.hasValidColoring());
 	}
 	
 	@Test
@@ -99,6 +106,8 @@ public class BrownTest {
 		// executa algoritmo de coloração
 		int k = brown.executeBrown(graph);
 		assertEquals(7, k);
+
+		assertEquals(true, graph.hasValidColoring());
 	}
 	
 	@Test
@@ -115,6 +124,8 @@ public class BrownTest {
 		// executa algoritmo de coloração
 		int k = brown.executeBrown(graph);
 		assertEquals(8, k);
+
+		assertEquals(true, graph.hasValidColoring());
 	}
 
 }
