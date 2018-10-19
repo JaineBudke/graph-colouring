@@ -26,7 +26,7 @@ import graph.Vertex;
 public class Graph implements Cloneable, Serializable {
 
 	private ArrayList<Vertex> vertexList;
-	//private ArrayList<Edge> edgeList;
+	private ArrayList<Edge> edgeList;
 	private int chromaticNumber;
 
 	private static final Logger LOGGER = Logger.getLogger( Graph.class.getName() );
@@ -80,10 +80,10 @@ public class Graph implements Cloneable, Serializable {
 	/**
 	 * Retorna arestas do grafo
 	 * @return Lista de arestas do grafo
-	 
+	*/ 
 	public ArrayList<Edge> getEdges( ){	
 		return edgeList;
-	}*/
+	}
 
 	/**
 	 * Retorna vértices do grafo
@@ -136,23 +136,25 @@ public class Graph implements Cloneable, Serializable {
 	 * Verifica de aresta está no grafo
 	 * @param e Aresta
 	 * @return Aresta se aresta está no grafo, null caso contrário
-	 *
-	public Edge containsEdge( Edge e ){
+	 **/
+	public boolean containsEdge( Edge e ){
 
 		for( int i=0; i<edgeList.size(); i++ ){
 			Vertex vOrigin = edgeList.get(i).getOrigin();
 			Vertex vDestination = edgeList.get(i).getDestination();
 
-			boolean condition1 = vOrigin == e.getOrigin() && vDestination == e.getDestination();
-			boolean condition2 = vOrigin == e.getDestination() && vDestination == e.getOrigin();
+			boolean condition1 = vOrigin.getLabel() == e.getOrigin().getLabel() && vDestination.getLabel() == e.getDestination().getLabel();
+			boolean condition2 = vOrigin.getLabel() == e.getDestination().getLabel() && vDestination.getLabel() == e.getOrigin().getLabel();
 
 			if( condition1 || condition2 ){
-				return edgeList.get(i);
+				return true;
 			}
 		}
-		return null;
+		return false;
 
-	}*/
+	}
+	
+	
 
 	/**
 	 * Verifica se vértice está no grafo
