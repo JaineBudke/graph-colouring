@@ -15,13 +15,24 @@ public class AntColony {
 	private ArrayList<Vertex> U = new ArrayList<>();
 	
 	// matriz de feromônios
-	private int[][] pheromone;
+	private double[][] pheromone;
 	
 	// lista de aptidão
 	private double[] fitnessList;
 	
 	// lista de probabilidade
 	private double[] probabilityList;
+	
+	// Probabilidade de evaporação do feromônio
+	private float p = 0.5f;
+	
+	// lista auxiliar para a trilha de fenomonios para cada formiga
+	private double[][] trail;
+	
+	// Conjunto de classes de cores
+	private ArrayList<ArrayList<Vertex> > C;
+	
+	private int k = 0;
 		
 		
 	
@@ -39,7 +50,7 @@ public class AntColony {
 			// recupera o valor do feromônio na posição entre os vertices analisados
 			int vi = Integer.parseInt(v.getLabel());
 			int vj = Integer.parseInt(w.getLabel());
-			int ph = pheromone[vi][vj];
+			double ph = pheromone[vi][vj];
 			
 			double f = Math.pow(dN, 2) * Math.pow(ph, 4);			
 			
@@ -150,7 +161,7 @@ public class AntColony {
 	public void pheromoneInitialize(){
 		
 		// inicializa matriz de feromônios com número de vértices
-		pheromone = new int[U.size()][U.size()];
+		pheromone = new double[U.size()][U.size()];
 		
 		
 		// percorre matriz
@@ -176,15 +187,44 @@ public class AntColony {
 		
 	}
 	
-	public void execute( Graph g ){
+	/**
+	 * Atualiza trilha de feronômios baseado nas soluções 
+	 * encontradas por todas as formigas.
+	 */
+	public void updatePheromoneTrail() {
 		
-		graph = g.clone();
-		U = graph.getVertexes();
+	}
+	
+	/**
+	 * Atualiza matrix que guarda atualiza a trilha para
+	 * cada formiga
+	 * @param k Número de cores encontradas 
+	 */
+	public void updateAuxiliarTrail(ArrayList<Vertex> Ck) {
+		int k = Ck.size();
+		for( int i = 0; i < Ck.size(); i++) {
+			for(int j=0; j < Ck.size(); j++) {
+				if(i!= j) {
+					
+					// Atualiza proporção se 
+					if(Ck.get(i) == Ck.get(j)) {
+						trail[i][j] += 1/k;
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Passo construtivo onde cada formiga encontra uma coloração
+	 * @param g
+	 */
+	public void buildSolution(Graph g){
 		
-		ArrayList<Vertex> Ck = new ArrayList<>();
-		int k = 0;
+		U = g.getVertexes();
+		k = 0;
 		
-		pheromoneInitialize();
+		ArrayList<Vertex> Ck = C.get(k);
 		
 		while( !U.isEmpty() ){
 			
@@ -199,6 +239,22 @@ public class AntColony {
 			k++;
 			
 		}
+		
+	}
+	
+	/**
+	 * Execução do algoritmo
+	 */
+	public void execute(Graph g ) {
+		graph = g.clone();
+		U = graph.getVertexes();
+		
+		//Inicialiação das matrizes
+		pheromoneInitialize();
+		
+		// Praa cada formiga, constroi uma solução
+		buildSolution(graph);
+		
 		
 	}
 	
