@@ -38,16 +38,16 @@ public class Graph implements Cloneable, Serializable {
 	 */
 	public Graph( ){
 		vertexList = new ArrayList<Vertex>();
-		//edgeList = new ArrayList<Edge>();
+		edgeList = new ArrayList<Edge>();
 	}
 
 	/**
 	 * Método para adicionar nova aresta do grafo
 	 * @param e Aresta a ser adicionada
-	 *
+	 **/
 	public void addEdge( Edge e ){	
 		edgeList.add(e);
-	}*/
+	}
 	
 	/**
 	 * Método para adicionar nova aresta do grafo
@@ -56,7 +56,7 @@ public class Graph implements Cloneable, Serializable {
 	 */
 	public void addEdge( Vertex v1, Vertex v2 ){	
 		Edge e = new Edge(v1, v2);
-		//edgeList.add(e);
+		edgeList.add(e);
 		v1.addAdjacent(e);
 		v2.addAdjacent(e);
 	}
@@ -107,14 +107,14 @@ public class Graph implements Cloneable, Serializable {
 
 	/**
 	 * Exibe todas as arestas do grafo
-	 *
+	 **/
 	public void showEdgeList( ){
 
 		for( int i=0; i<edgeList.size(); i++ ){
 			edgeList.get(i).showEdge();
 		}
 
-	}*/
+	}
 
 	/**
 	 * Recupera número de cores do grafo
@@ -143,9 +143,9 @@ public class Graph implements Cloneable, Serializable {
 			Vertex vOrigin = edgeList.get(i).getOrigin();
 			Vertex vDestination = edgeList.get(i).getDestination();
 
-			boolean condition1 = vOrigin.getLabel() == e.getOrigin().getLabel() && vDestination.getLabel() == e.getDestination().getLabel();
-			boolean condition2 = vOrigin.getLabel() == e.getDestination().getLabel() && vDestination.getLabel() == e.getOrigin().getLabel();
-
+			boolean condition1 = vOrigin.getLabel().equals(e.getOrigin().getLabel()) && vDestination.getLabel().equals( e.getDestination().getLabel() );
+			boolean condition2 = vOrigin.getLabel().equals(e.getDestination().getLabel()) && vDestination.getLabel().equals(e.getOrigin().getLabel());
+			
 			if( condition1 || condition2 ){
 				return true;
 			}
@@ -155,6 +155,29 @@ public class Graph implements Cloneable, Serializable {
 	}
 	
 	
+	/**
+	 * Verifica de aresta está no grafo
+	 * @param e Aresta
+	 * @return Aresta se aresta está no grafo, null caso contrário
+	 **/
+	public boolean containsEdge( String v1, String v2 ){
+
+		for( int i=0; i<edgeList.size(); i++ ){
+			Vertex vOrigin = edgeList.get(i).getOrigin();
+			Vertex vDestination = edgeList.get(i).getDestination();
+
+			boolean condition1 = vOrigin.getLabel().equals(v1) && vDestination.getLabel().equals(v2);
+			boolean condition2 = vOrigin.getLabel().equals(v2) && vDestination.getLabel().equals(v1);
+			
+			if( condition1 || condition2 ){
+				return true;
+			}
+		}
+		return false;
+
+	}
+	
+
 
 	/**
 	 * Verifica se vértice está no grafo
@@ -206,7 +229,7 @@ public class Graph implements Cloneable, Serializable {
 	/**
 	 * Cria cópia do grafo através da serialização.
 	 * @return Cópia do grafo
-	 */
+	 
 	public Graph clone() {
 		Graph cloneGraph = new Graph();
 		
@@ -234,9 +257,9 @@ public class Graph implements Cloneable, Serializable {
 		return cloneGraph;
 		
 		
-	}
+	}*/
 	//@Override
-	/*public Graph clone()
+	public Graph clone()
 	{
 		Graph object = null;
 		//try-with-resources
@@ -263,7 +286,7 @@ public class Graph implements Cloneable, Serializable {
 			LOGGER.info(e.getMessage());
 		} 
 		return object;
-	}*/
+	}
 	
 	
 	/**

@@ -1,8 +1,10 @@
 package view;
 
 import manager.Engine;
+import metaheuristic_algorithms.AntColony;
 import exact_algorithms.Brown_algorithm;
 import exact_algorithms.ZykovAlgorithm;
+import graph.Edge;
 import graph.Graph;
 
 
@@ -16,16 +18,21 @@ public class Main {
 		ZykovAlgorithm zykov = new ZykovAlgorithm();
 		
 		// lê arquivo com o índice indicado
-		engine.readArchivebyFilename("myciel3.col");
+		engine.readArchivebyFilename("dados");
 		// cria o grafo
 		Graph graph = engine.createGraph();
 		
 		// executa algoritmo de coloração
-		int k = zykov.executeZykov(graph);
+		//int k = zykov.executeZykov(graph);
 		
 		//int k = brown.executeBrown(graph);
-		System.out.println(zykov.cont);
-		System.out.println("Número cromático do grafo: "+k);
+		//System.out.println(zykov.cont);
+		//System.out.println("Número cromático do grafo: "+k);
+	 	
+		AntColony ant = new AntColony();
+		ant.execute(graph);
+		
+		
 		
 	}
 

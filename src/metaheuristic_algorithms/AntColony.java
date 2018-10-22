@@ -30,7 +30,7 @@ public class AntColony {
 	private double[][] trail;
 	
 	// Conjunto de classes de cores
-	private ArrayList<ArrayList<Vertex> > C;
+	public ArrayList<ArrayList<Vertex> > C;
 	
 	private int k = 0;
 		
@@ -48,9 +48,10 @@ public class AntColony {
 			int dN = v.getAdjacentVertexes().size();
 			
 			// recupera o valor do feromônio na posição entre os vertices analisados
-			int vi = Integer.parseInt(v.getLabel());
-			int vj = Integer.parseInt(w.getLabel());
-			double ph = pheromone[vi][vj];
+			int vi = Integer.parseInt(v.getLabel().replace("v", ""));
+			int vj = Integer.parseInt(w.getLabel().replace("v", ""));
+			
+			double ph = pheromone[vi-1][vj-1];
 			
 			double f = Math.pow(dN, 2) * Math.pow(ph, 4);			
 			
@@ -172,11 +173,18 @@ public class AntColony {
 		for( int i=0; i<U.size(); i++ ){
 			for( int j=0; j<U.size(); j++ ){
 				
+				ArrayList<Edge> edges = graph.getEdges();
+
+							
 				// verifica se tem aresta entre vertices
-				Vertex vO = new Vertex("v"+i);
-				Vertex vD = new Vertex("v"+j);
+				Vertex vO = new Vertex("v"+(i+1));
+				Vertex vD = new Vertex("v"+(j+1));
 				Edge e = new Edge( vO, vD );
+				
+				
+		
 				if( graph.containsEdge(e) || i==j ){
+					
 					
 					pheromone[i][j] = 0;
 					
@@ -186,8 +194,14 @@ public class AntColony {
 					
 				}
 				
+				System.out.print(pheromone[i][j]+"  ");
+				
 			}	
+			
+			System.out.println();
 		}
+		
+		
 		
 	}
 	
@@ -259,6 +273,7 @@ public class AntColony {
 		// Enquanto existirem vértices sem cor
 		while( !U.isEmpty() ){
 			
+			
 			Ck = findStableSet( ); 
 			
 			
@@ -289,7 +304,7 @@ public class AntColony {
 		boolean stopCriteria = true;
 		
 		
-		while( stopCriteria ) {
+		//while( stopCriteria ) {
 			// Para cada formiga, constroi uma solução
 			for(int ant = 0; ant < 100; ant++) {
 				graph.reset();
@@ -303,7 +318,7 @@ public class AntColony {
 			
 			// Atualiza trilha de feromônios
 			updatePheromoneTrail();
-		}
+		//}
 		
 	}
 	

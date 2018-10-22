@@ -153,10 +153,10 @@ Graph graph = new Graph();
 		graph.addEdge(v1, v2);
 		assertEquals( true, graph.isComplete());
 		
-		Engine engine = new Engine();
-		graph = engine.generate(10, 0.2);
-		assertEquals(10, graph.getVertexes().size());
-		System.out.println(graph);
+		//Engine engine = new Engine();
+		//graph = engine.generate(10, 0.2);
+		//assertEquals(10, graph.getVertexes().size());
+		//System.out.println(graph);
 		
 	}
 
