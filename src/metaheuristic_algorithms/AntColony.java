@@ -158,6 +158,10 @@ public class AntColony {
 		
 	}
 	
+	/**
+	 * Inicializa matriz que contém a trilha de feromônios
+	 * de todas as formigas
+	 */
 	public void pheromoneInitialize(){
 		
 		// inicializa matriz de feromônios com número de vértices
@@ -188,26 +192,52 @@ public class AntColony {
 	}
 	
 	/**
+	 * Inicializa matriz auxiliar que guarda é atualizada
+	 * quandop cada formiga encontra uma solução
+	 */
+	public void auxiliarTrailInitialize() {
+		//A matriz deve conter inicialmente apenas 0s
+		//Por padrão, o Java inicializa double como 0.0d
+		trail = new double[U.size()][U.size()];	
+		
+	}
+	
+	/**
 	 * Atualiza trilha de feronômios baseado nas soluções 
 	 * encontradas por todas as formigas.
 	 */
 	public void updatePheromoneTrail() {
+		// Percorre a matriz nxn, com n sendo o numero de vértices
+		for( int i = 0; i < graph.getVertexes().size(); i++) {
+			for(int j=0; j < graph.getVertexes().size(); j++) {
+				if(i!= j) {
+					
+					// Evapora feromônio de acordo com fator de evaporação p
+					// Deposita o que estava na matrix auxiliar
+					pheromone[i][j] = p * pheromone[i][j] + trail[i][j];
+				}
+			}
+		}
 		
 	}
 	
 	/**
 	 * Atualiza matrix que guarda atualiza a trilha para
-	 * cada formiga
-	 * @param k Número de cores encontradas 
+	 * cada formiga.
+	 * Basicamente, é o valor que a formiga deposita na trilha
+	 * em cada iteração.
 	 */
-	public void updateAuxiliarTrail(ArrayList<Vertex> Ck) {
-		int k = Ck.size();
-		for( int i = 0; i < Ck.size(); i++) {
-			for(int j=0; j < Ck.size(); j++) {
+	public void updateAuxiliarTrail() {
+		// Percorre a matriz nxn, com n sendo o numero de vértices
+		for( int i = 0; i < graph.getVertexes().size(); i++) {
+			for(int j=0; j < graph.getVertexes().size(); j++) {
 				if(i!= j) {
+					Vertex v1 = graph.getVertex(i);
+					Vertex v2 = graph.getVertex(j);
 					
-					// Atualiza proporção se 
-					if(Ck.get(i) == Ck.get(j)) {
+					// Atualiza proporção se dois vertices receberem a mesma cor na 
+					// solução atual
+					if(v1.getColor().equals(v2.getColor())) {
 						trail[i][j] += 1/k;
 					}
 				}
@@ -224,8 +254,9 @@ public class AntColony {
 		U = g.getVertexes();
 		k = 0;
 		
-		ArrayList<Vertex> Ck = C.get(k);
+		ArrayList<Vertex> Ck = new ArrayList<Vertex>();
 		
+		// Enquanto existirem vértices sem cor
 		while( !U.isEmpty() ){
 			
 			Ck = findStableSet( ); 
@@ -251,10 +282,28 @@ public class AntColony {
 		
 		//Inicialiação das matrizes
 		pheromoneInitialize();
+		auxiliarTrailInitialize();
 		
-		// Praa cada formiga, constroi uma solução
-		buildSolution(graph);
+		//flag ficticia para simular criterio de parada
+		//TODO: implementar criterio de parada
+		boolean stopCriteria = true;
 		
+		
+		while( stopCriteria ) {
+			// Para cada formiga, constroi uma solução
+			for(int ant = 0; ant < 100; ant++) {
+				graph.reset();
+				
+				// A formiga busca a coloração
+				buildSolution(graph);
+				
+				//Atualiza matrix auxiliar baseado na solução atual
+				updateAuxiliarTrail();
+			}
+			
+			// Atualiza trilha de feromônios
+			updatePheromoneTrail();
+		}
 		
 	}
 	
