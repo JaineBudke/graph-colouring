@@ -2,6 +2,8 @@ package metaheuristic_algorithms;
 
 import java.util.ArrayList;
 
+import javax.swing.plaf.synth.SynthSeparatorUI;
+
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
@@ -30,10 +32,11 @@ public class AntColony {
 	private double[][] trail;
 	
 	// Conjunto de classes de cores
-	public ArrayList<ArrayList<Vertex> > C;
+	private ArrayList<ArrayList<Vertex> > C;
 	
 	private int k = 0;
 		
+	
 		
 	
 	public void calculateFitness( Vertex v, ArrayList<Vertex> W ){
@@ -105,11 +108,11 @@ public class AntColony {
 		return vMax;
 	}
 	
-	public ArrayList<Vertex> findStableSet( ){
+	public ArrayList<Vertex> findStableSet( ArrayList<Vertex> vertexes ){
 		
 		ArrayList<Vertex> N = new ArrayList<>();
 		ArrayList<Vertex> Ck = new ArrayList<>();
-		ArrayList<Vertex> W = U;
+		ArrayList<Vertex> W = (ArrayList<Vertex>) vertexes.clone();
 		
 		// v is selected from W at random
 		Vertex v = W.get(0);
@@ -119,14 +122,12 @@ public class AntColony {
 		
 		// Add all neighbors in W of v to N
 		ArrayList<Edge> adjacents = v.getAdjacentVertexes();
+		
 		for( int i=0; i<adjacents.size(); i++ ){
-			
 			N.add( adjacents.get(i).getVertex(v) );
 			
 			// Remove v neighbors from W
-			W.remove(adjacents.get(i).getVertex(v));
-			
-			
+			W.remove(adjacents.get(i).getVertex(v));	
 		}
 		
 		// remove v from W
@@ -136,8 +137,10 @@ public class AntColony {
 			
 			Vertex newV = rouletteWheel( v, W );
 			
+			
 			// Add newV to Ck
 			Ck.add(newV);
+			
 			
 			// Add all neighbors of newV to N
 			ArrayList<Edge> adjacentsNewV = newV.getAdjacentVertexes();
@@ -265,39 +268,45 @@ public class AntColony {
 	 */
 	public void buildSolution(Graph g){
 		
-		U = g.getVertexes();
-		k = 0;
+		
+		ArrayList<Vertex> Vertexes = (ArrayList<Vertex>) U.clone();
+		ArrayList<Vertex> setVertex = new ArrayList<>();
+		k = 0; 
 		
 		ArrayList<Vertex> Ck = new ArrayList<Vertex>();
 		
+
 		// Enquanto existirem vértices sem cor
-		while( !U.isEmpty() ){
+		while( !Vertexes.isEmpty() ){
 			
-			
-			Ck = findStableSet( ); 
-			
-			
+			Ck = findStableSet( Vertexes ); 
+
 			for( Vertex v : Ck ){
-				U.remove(v); // U \ Ck
+				Vertexes.remove(v); // U \ Ck
 				v.setColor(k+"");
+				setVertex.add(v);
 			}
-			
+
 			k++;
-			
 		}
 		
+		C.add(setVertex);
+
 	}
 	
 	/**
 	 * Execução do algoritmo
 	 */
-	public void execute(Graph g ) {
+	public ArrayList<ArrayList<Vertex>> execute(Graph g ) {
 		graph = g.clone();
 		U = graph.getVertexes();
+		
 		
 		//Inicialiação das matrizes
 		pheromoneInitialize();
 		auxiliarTrailInitialize();
+		
+		C = new ArrayList<>();
 		
 		//flag ficticia para simular criterio de parada
 		//TODO: implementar criterio de parada
@@ -306,7 +315,7 @@ public class AntColony {
 		
 		//while( stopCriteria ) {
 			// Para cada formiga, constroi uma solução
-			for(int ant = 0; ant < 100; ant++) {
+			for(int ant = 0; ant < 5; ant++) {
 				graph.reset();
 				
 				// A formiga busca a coloração
@@ -320,7 +329,10 @@ public class AntColony {
 			updatePheromoneTrail();
 		//}
 		
+		return C;
 	}
+	
+	
 	
 	
 }

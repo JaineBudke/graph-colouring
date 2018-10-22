@@ -2,10 +2,14 @@ package view;
 
 import manager.Engine;
 import metaheuristic_algorithms.AntColony;
+
+import java.util.ArrayList;
+
 import exact_algorithms.Brown_algorithm;
 import exact_algorithms.ZykovAlgorithm;
 import graph.Edge;
 import graph.Graph;
+import graph.Vertex;
 
 
 public class Main {
@@ -30,9 +34,19 @@ public class Main {
 		//System.out.println("Número cromático do grafo: "+k);
 	 	
 		AntColony ant = new AntColony();
-		ant.execute(graph);
+		ArrayList<ArrayList<Vertex>> C = ant.execute(graph);
 		
-		
+		for( int i=0; i<C.size(); i++ ){
+			
+			System.out.println("ANT "+i);
+			
+			for( int j=0; j<C.get(i).size(); j++ ){
+				System.out.print(C.get(i).get(j).getLabel()+"  :  ");
+				System.out.println(C.get(i).get(j).getColor());
+
+			}
+			
+		}
 		
 	}
 
