@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -50,12 +49,10 @@ public class Engine {
 
 			String linha = lerArq.readLine(); // lê a primeira linha
 			
-			int p = 0;
-			p++;
-			
+
 			while ( linha != null ) {
 				ArrayList<String> lectures = new ArrayList<String>(); 
-
+				
 				
 				String[] element = linha.split(" "); // separa a linha pelo espaçamento
 
@@ -100,7 +97,7 @@ public class Engine {
 		for (int i = 1; i <= index; i++) {
 			filename = listOfFiles.get(i).getName();
 		}**/
-		LOGGER.info(filename);
+		
 		
 		this.readArchive(absolutePath+"/src/data/" + filename);
 		
@@ -153,8 +150,11 @@ public class Engine {
 
 					Edge edge = new Edge( v1, v2 );
 					
-					if( !v1.isAdjacent(v2) ) {
-						graph.addEdge(v1, v2);
+					
+					if( graph.containsEdge(edge) == false ) {
+						graph.addEdge(edge);
+						v1.addAdjacent(edge);
+						v2.addAdjacent(edge);
 						
 					} else {
 						// aumenta o peso da aresta
@@ -173,7 +173,6 @@ public class Engine {
 
 		
 	}
-	
 	
 	/**
 	 * Gera um grafo com numberVertex nós
@@ -207,6 +206,11 @@ public class Engine {
 		}
 
 		return newGraph;
-	}
+}
+	
+	
+	
+	
+	
 	
 }

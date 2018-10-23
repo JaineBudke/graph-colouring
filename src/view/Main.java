@@ -1,9 +1,16 @@
 package view;
 
 import manager.Engine;
+import metaheuristic_algorithms.AntColony;
+
+import java.util.ArrayList;
+import java.util.Map;
+
 import exact_algorithms.Brown_algorithm;
 import exact_algorithms.ZykovAlgorithm;
+import graph.Edge;
 import graph.Graph;
+import graph.Vertex;
 
 
 public class Main {
@@ -15,17 +22,47 @@ public class Main {
 		
 		ZykovAlgorithm zykov = new ZykovAlgorithm();
 		
-		// lê arquivo com o índice indicado
-		engine.readArchivebyFilename("myciel3.col");
-		// cria o grafo
+		/*// Cria grafo
+		Vertex v1 = new Vertex("v1");
+		Vertex v2 = new Vertex("v2");
+		Vertex v3 = new Vertex("v3");
+		Vertex v4 = new Vertex("v4");
+		Graph graph = new Graph();
+		graph.addVertex(v1);
+		graph.addVertex(v2);
+		graph.addVertex(v3);
+		graph.addVertex(v4);
+		graph.addEdge(v1, v2);
+		graph.addEdge(v2, v3);
+		graph.addEdge(v3, v4);*/
+		
+		
+
+		engine.readArchivebyFilename("myciel7.col");
 		Graph graph = engine.createGraph();
 		
-		// executa algoritmo de coloração
-		int k = zykov.executeZykov(graph);
+		AntColony ant = new AntColony();
+		Map<Integer, ArrayList<Vertex>> result = ant.execute(graph);
 		
-		//int k = brown.executeBrown(graph);
-		System.out.println(zykov.cont);
-		System.out.println("Número cromático do grafo: "+k);
+
+
+		// imprime numero de cores
+		ArrayList<Vertex> vertexes = new ArrayList<Vertex>();
+		for (Integer key : result.keySet()) {
+
+			System.out.println("Número de cores: "+key);	
+			vertexes = result.get(key);
+			
+		}
+		
+		// imprime vertices com as cores
+		for( int i=0; i<vertexes.size(); i++ ){
+			
+			System.out.print(vertexes.get(i).getLabel()+"  :  ");
+			System.out.println(vertexes.get(i).getColor());
+			
+		}
+		
 		
 	}
 
