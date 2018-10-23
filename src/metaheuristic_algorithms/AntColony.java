@@ -1,6 +1,8 @@
 package metaheuristic_algorithms;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import javax.swing.plaf.synth.SynthSeparatorUI;
@@ -33,8 +35,9 @@ public class AntColony {
 	private double[][] trail;
 	
 	// Conjunto de classes de cores
-	private ArrayList<ArrayList<Vertex> > C;
-	
+	//private ArrayList<ArrayList<Vertex> > C;
+	private Map<Integer, ArrayList<Vertex>> C;
+
 	private int k = 0;
 		
 	
@@ -214,11 +217,9 @@ public class AntColony {
 					
 				}
 				
-				System.out.print(pheromone[i][j]+"  ");
 				
 			}	
 			
-			System.out.println();
 		}
 		
 		
@@ -306,15 +307,16 @@ public class AntColony {
 
 			k++;
 		}
-		
-		C.add(setVertex);
+
+		C.put(k, setVertex);
+		//C.add(setVertex);
 
 	}
 	
 	/**
 	 * Execução do algoritmo
 	 */
-	public ArrayList<ArrayList<Vertex>> execute(Graph g ) {
+	public Map<Integer, ArrayList<Vertex>> execute(Graph g ) {
 		graph = g.clone();
 		U = graph.getVertexes();
 		
@@ -323,7 +325,7 @@ public class AntColony {
 		pheromoneInitialize();
 		auxiliarTrailInitialize();
 		
-		C = new ArrayList<>();
+		C = new HashMap<Integer, ArrayList<Vertex>>();
 		
 		//flag ficticia para simular criterio de parada
 		//TODO: implementar criterio de parada
@@ -331,9 +333,9 @@ public class AntColony {
 		
 		
 		//while( stopCriteria ) {
-		for(int j=0; j< 5; j++) {
+		for(int j=0; j< 10; j++) {
 			// Para cada formiga, constroi uma solução
-			for(int ant = 0; ant < 5; ant++) {
+			for(int ant = 0; ant < 20; ant++) {
 				graph.reset();
 				
 				// A formiga busca a coloração
@@ -347,7 +349,24 @@ public class AntColony {
 			updatePheromoneTrail();
 		}
 		
-		return C;
+
+		int min = 999999999;
+		
+		// percorre chaves e procura pelo menor numero cromatico
+		for (Integer key : C.keySet()) {
+			min = Math.min(min, key);
+		}
+		
+
+        //Capturamos o valor a partir da chave
+        ArrayList<Vertex> vertexes = C.get(min);
+        
+        
+    	Map<Integer, ArrayList<Vertex>> result = new HashMap<>();
+    	result.put(min, vertexes);
+    	
+		return result;
+		
 	}
 	
 	

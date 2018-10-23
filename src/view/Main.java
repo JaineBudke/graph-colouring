@@ -4,6 +4,7 @@ import manager.Engine;
 import metaheuristic_algorithms.AntColony;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import exact_algorithms.Brown_algorithm;
 import exact_algorithms.ZykovAlgorithm;
@@ -21,7 +22,7 @@ public class Main {
 		
 		ZykovAlgorithm zykov = new ZykovAlgorithm();
 		
-		// Cria grafo
+		/*// Cria grafo
 		Vertex v1 = new Vertex("v1");
 		Vertex v2 = new Vertex("v2");
 		Vertex v3 = new Vertex("v3");
@@ -33,23 +34,35 @@ public class Main {
 		graph.addVertex(v4);
 		graph.addEdge(v1, v2);
 		graph.addEdge(v2, v3);
-		graph.addEdge(v3, v4);
+		graph.addEdge(v3, v4);*/
 		
+		
+
+		engine.readArchivebyFilename("myciel7.col");
+		Graph graph = engine.createGraph();
 		
 		AntColony ant = new AntColony();
-		ArrayList<ArrayList<Vertex>> C = ant.execute(graph);
+		Map<Integer, ArrayList<Vertex>> result = ant.execute(graph);
 		
-		for( int i=0; i<C.size(); i++ ){
-			
-			System.out.println("ANT "+i);
-			
-			for( int j=0; j<C.get(i).size(); j++ ){
-				System.out.print(C.get(i).get(j).getLabel()+"  :  ");
-				System.out.println(C.get(i).get(j).getColor());
-				
-			}
+
+
+		// imprime numero de cores
+		ArrayList<Vertex> vertexes = new ArrayList<Vertex>();
+		for (Integer key : result.keySet()) {
+
+			System.out.println("Número de cores: "+key);	
+			vertexes = result.get(key);
 			
 		}
+		
+		// imprime vertices com as cores
+		for( int i=0; i<vertexes.size(); i++ ){
+			
+			System.out.print(vertexes.get(i).getLabel()+"  :  ");
+			System.out.println(vertexes.get(i).getColor());
+			
+		}
+		
 		
 	}
 
