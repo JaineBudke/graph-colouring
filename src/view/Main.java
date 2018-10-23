@@ -21,18 +21,21 @@ public class Main {
 		
 		ZykovAlgorithm zykov = new ZykovAlgorithm();
 		
-		// lê arquivo com o índice indicado
-		engine.readArchivebyFilename("dados");
-		// cria o grafo
-		Graph graph = engine.createGraph();
+		// Cria grafo
+		Vertex v1 = new Vertex("v1");
+		Vertex v2 = new Vertex("v2");
+		Vertex v3 = new Vertex("v3");
+		Vertex v4 = new Vertex("v4");
+		Graph graph = new Graph();
+		graph.addVertex(v1);
+		graph.addVertex(v2);
+		graph.addVertex(v3);
+		graph.addVertex(v4);
+		graph.addEdge(v1, v2);
+		graph.addEdge(v2, v3);
+		graph.addEdge(v3, v4);
 		
-		// executa algoritmo de coloração
-		//int k = zykov.executeZykov(graph);
 		
-		//int k = brown.executeBrown(graph);
-		//System.out.println(zykov.cont);
-		//System.out.println("Número cromático do grafo: "+k);
-	 	
 		AntColony ant = new AntColony();
 		ArrayList<ArrayList<Vertex>> C = ant.execute(graph);
 		
@@ -43,7 +46,7 @@ public class Main {
 			for( int j=0; j<C.get(i).size(); j++ ){
 				System.out.print(C.get(i).get(j).getLabel()+"  :  ");
 				System.out.println(C.get(i).get(j).getColor());
-
+				
 			}
 			
 		}

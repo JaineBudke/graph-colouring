@@ -1,6 +1,7 @@
 package metaheuristic_algorithms;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.plaf.synth.SynthSeparatorUI;
 
@@ -38,7 +39,11 @@ public class AntColony {
 		
 	
 		
-	
+	/**
+	 * Calcula a aptidão do vértice v
+	 * @param v
+	 * @param W
+	 */
 	public void calculateFitness( Vertex v, ArrayList<Vertex> W ){
 		
 		fitnessList = new double[W.size()];
@@ -65,6 +70,11 @@ public class AntColony {
 		
 	}
 	
+	/**
+	 * Calcula a probabilidade do vértice v ser o melhor candidato
+	 * @param v
+	 * @param W
+	 */
 	public void calculateProbability( Vertex v, ArrayList<Vertex> W ){
 		
 		probabilityList = new double[W.size()];
@@ -85,7 +95,12 @@ public class AntColony {
 		
 	}
 	
-	
+	/**
+	 * Método roleta russa para selecionar próximo vértice
+	 * @param v
+	 * @param W
+	 * @return
+	 */
 	public Vertex rouletteWheel( Vertex v, ArrayList<Vertex> W ){
 		
 		calculateFitness( v, W ); 
@@ -115,7 +130,9 @@ public class AntColony {
 		ArrayList<Vertex> W = (ArrayList<Vertex>) vertexes.clone();
 		
 		// v is selected from W at random
-		Vertex v = W.get(0);
+		Random rand = new Random();
+		int  n = rand.nextInt( W.size());
+		Vertex v = W.get(n);
 		
 		// Add v to Ck
 		Ck.add(v);
@@ -255,7 +272,7 @@ public class AntColony {
 					// Atualiza proporção se dois vertices receberem a mesma cor na 
 					// solução atual
 					if(v1.getColor().equals(v2.getColor())) {
-						trail[i][j] += 1/k;
+						trail[i][j] += 1.0/k;
 					}
 				}
 			}
@@ -314,6 +331,7 @@ public class AntColony {
 		
 		
 		//while( stopCriteria ) {
+		for(int j=0; j< 5; j++) {
 			// Para cada formiga, constroi uma solução
 			for(int ant = 0; ant < 5; ant++) {
 				graph.reset();
@@ -327,7 +345,7 @@ public class AntColony {
 			
 			// Atualiza trilha de feromônios
 			updatePheromoneTrail();
-		//}
+		}
 		
 		return C;
 	}
