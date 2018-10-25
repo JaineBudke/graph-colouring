@@ -38,7 +38,7 @@ public class Main {
 		
 		
 
-		engine.readArchivebyFilename("myciel7.col");
+		engine.readArchivebyFilename("DSJC500.5.col");
 		Graph graph = engine.createGraph();
 		
 		AntColony ant = new AntColony();
