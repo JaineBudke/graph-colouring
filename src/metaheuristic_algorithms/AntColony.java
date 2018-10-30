@@ -354,7 +354,8 @@ public class AntColony {
 	 * Execução do algoritmo
 	 */
 	public TreeMap<Integer, ArrayList<Vertex>> execute(Graph g ) {
-		graph = g.clone();
+		graph = g;
+
 		U = graph.getVertexes();
 		
 		
@@ -371,8 +372,9 @@ public class AntColony {
 			
 			C = new TreeMap<Integer, ArrayList<Vertex>>();
 
+
 			// Para cada formiga, constroi uma solução
-			for(int ant = 0; ant < 20; ant++) {
+			for(int ant = 0; ant < 1000; ant++) {
 				graph.reset();
 				
 				// A formiga busca a coloração
