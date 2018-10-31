@@ -22,24 +22,33 @@ public class Main {
 		
 		ZykovAlgorithm zykov = new ZykovAlgorithm();
 		
-		/*// Cria grafo
+		Vertex v0 = new Vertex("v8");
 		Vertex v1 = new Vertex("v1");
 		Vertex v2 = new Vertex("v2");
 		Vertex v3 = new Vertex("v3");
 		Vertex v4 = new Vertex("v4");
+		Vertex v5 = new Vertex("v5");
+		Vertex v6 = new Vertex("v6");
+		Vertex v7 = new Vertex("v7");
 		Graph graph = new Graph();
+		graph.addVertex(v0);
 		graph.addVertex(v1);
 		graph.addVertex(v2);
 		graph.addVertex(v3);
 		graph.addVertex(v4);
-		graph.addEdge(v1, v2);
-		graph.addEdge(v2, v3);
-		graph.addEdge(v3, v4);*/
-		
-		
-
-		engine.readArchivebyFilename("DSJC500.5.col");
-		Graph graph = engine.createGraph();
+		graph.addVertex(v5);
+		graph.addVertex(v6);
+		graph.addVertex(v7);
+		graph.addEdge(v0, v1);
+		graph.addEdge(v0, v3);
+		graph.addEdge(v0, v2);
+		graph.addEdge(v3, v2);
+		graph.addEdge(v5, v2);
+		graph.addEdge(v3, v4);
+		graph.addEdge(v4, v6);
+		graph.addEdge(v7, v5);
+		graph.addEdge(v6, v5);
+		graph.addEdge(v7, v6);
 		
 		AntColony ant = new AntColony();
 		Map<Integer, ArrayList<Vertex>> result = ant.execute(graph);
