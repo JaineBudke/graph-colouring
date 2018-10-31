@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.junit.Before;
+import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.RepeatedTest;
 
 import graph.Graph;
@@ -14,16 +16,16 @@ import manager.Engine;
 import metaheuristic_algorithms.AntColony;
 
 public class AntColonyTest {
-	Engine engine;
-	AntColony antCol;
+	static Engine engine;
+	static AntColony antCol;
 	
-	@Before
-	public void setUp() {
+	@BeforeAll
+	static void onSetUp() {
 		engine = new Engine();
 		antCol = new AntColony();
 	}
 
-	@RepeatedTest(20)
+	@Test
 	public void testDSJC1251() {
 		engine.readArchivebyFilename("DSJC125.1.col");
 		// cria o grafo
