@@ -3,7 +3,10 @@ package metaheuristic_algorithms;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NavigableSet;
 import java.util.Random;
+import java.util.Set;
+import java.util.TreeMap;
 
 import javax.swing.plaf.synth.SynthSeparatorUI;
 
@@ -36,8 +39,14 @@ public class AntColony {
 	
 	// Conjunto de classes de cores
 	//private ArrayList<ArrayList<Vertex> > C;
-	private Map<Integer, ArrayList<Vertex>> C;
+	private TreeMap<Integer, ArrayList<Vertex>> C;
 
+	private ArrayList<Integer> chromaticNumbers;
+
+	private ArrayList<Vertex> bestColouring;
+	private int bestChromaticNumber = 99999999;
+
+	
 	private int k = 0;
 		
 	
@@ -313,11 +322,40 @@ public class AntColony {
 
 	}
 	
+	
+	/**
+	 * Critério de parada da colônia de formigas
+	 */
+	public boolean stopCriteria(){
+		
+		
+		// se tiver menos que 10 elementos, continua
+		if( chromaticNumbers.size() < 10 ){
+			return true;
+		}
+	
+		// se nas ultimas 10 interações o número cromático não for o mesmo, continua
+		int prev = chromaticNumbers.get(chromaticNumbers.size()-1);
+		for( int i=chromaticNumbers.size(); i>chromaticNumbers.size()-10; i-- ){
+			
+			if( chromaticNumbers.get(i-1) != prev ){
+				return true;
+			} else {
+				prev = chromaticNumbers.get(i-1);
+			}
+			
+		}
+		
+		return false;
+		
+	}
+	
 	/**
 	 * Execução do algoritmo
 	 */
-	public Map<Integer, ArrayList<Vertex>> execute(Graph g ) {
-		graph = g.clone();
+	public TreeMap<Integer, TreeMap<Integer, ArrayList<Vertex>>> execute(Graph g ) {
+		graph = g;
+
 		U = graph.getVertexes();
 		
 		
@@ -325,15 +363,16 @@ public class AntColony {
 		pheromoneInitialize();
 		auxiliarTrailInitialize();
 		
-		C = new HashMap<Integer, ArrayList<Vertex>>();
+		chromaticNumbers = new ArrayList<Integer>();
 		
-		//flag ficticia para simular criterio de parada
-		//TODO: implementar criterio de parada
-		boolean stopCriteria = true;
-		
-		
-		//while( stopCriteria ) {
-		for(int j=0; j< 10; j++) {
+		int iterations = 0;
+		while( stopCriteria() ) {
+		//for(int j=0; j< 10; j++) {
+			
+			
+			C = new TreeMap<Integer, ArrayList<Vertex>>();
+
+
 			// Para cada formiga, constroi uma solução
 			for(int ant = 0; ant < 20; ant++) {
 				graph.reset();
@@ -347,23 +386,25 @@ public class AntColony {
 			
 			// Atualiza trilha de feromônios
 			updatePheromoneTrail();
-		}
 		
+			// recupera o melhor número cromático das 20 formigas e adiciona na lista
+			chromaticNumbers.add(C.firstKey());
+			
+			if( bestChromaticNumber > C.firstKey() ){
+				bestChromaticNumber = C.firstKey();
+				bestColouring = C.get(C.firstKey());
+			}
 
-		int min = 999999999;
-		
-		// percorre chaves e procura pelo menor numero cromatico
-		for (Integer key : C.keySet()) {
-			min = Math.min(min, key);
+			iterations++;
+			
 		}
-		
-
-        //Capturamos o valor a partir da chave
-        ArrayList<Vertex> vertexes = C.get(min);
         
-        
-    	Map<Integer, ArrayList<Vertex>> result = new HashMap<>();
-    	result.put(min, vertexes);
+    	TreeMap<Integer, ArrayList<Vertex>> result1 = new TreeMap<>();
+    	result1.put(iterations, bestColouring);
+    	
+    	
+    	TreeMap<Integer, TreeMap<Integer, ArrayList<Vertex>>> result = new TreeMap<>();
+    	result.put(bestChromaticNumber, result1);
     	
 		return result;
 		
