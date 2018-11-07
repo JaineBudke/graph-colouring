@@ -353,7 +353,7 @@ public class AntColony {
 	/**
 	 * Execução do algoritmo
 	 */
-	public TreeMap<Integer, ArrayList<Vertex>> execute(Graph g ) {
+	public TreeMap<Integer, TreeMap<Integer, ArrayList<Vertex>>> execute(Graph g ) {
 		graph = g;
 
 		U = graph.getVertexes();
@@ -365,7 +365,7 @@ public class AntColony {
 		
 		chromaticNumbers = new ArrayList<Integer>();
 		
-		
+		int iterations = 0;
 		while( stopCriteria() ) {
 		//for(int j=0; j< 10; j++) {
 			
@@ -374,7 +374,7 @@ public class AntColony {
 
 
 			// Para cada formiga, constroi uma solução
-			for(int ant = 0; ant < 1000; ant++) {
+			for(int ant = 0; ant < 20; ant++) {
 				graph.reset();
 				
 				// A formiga busca a coloração
@@ -395,25 +395,16 @@ public class AntColony {
 				bestColouring = C.get(C.firstKey());
 			}
 
-			
+			iterations++;
 			
 		}
-		
-
-		/*int min = 999999999;
-		
-		// percorre chaves e procura pelo menor numero cromatico
-		for (Integer num : chromaticNumbers ) {
-			min = Math.min(min, num);
-		}
-		
-		
-        //Capturamos o valor a partir da chave
-        ArrayList<Vertex> vertexes = iterC.get(min);
-        */
         
-    	TreeMap<Integer, ArrayList<Vertex>> result = new TreeMap<>();
-    	result.put(bestChromaticNumber, bestColouring);
+    	TreeMap<Integer, ArrayList<Vertex>> result1 = new TreeMap<>();
+    	result1.put(iterations, bestColouring);
+    	
+    	
+    	TreeMap<Integer, TreeMap<Integer, ArrayList<Vertex>>> result = new TreeMap<>();
+    	result.put(bestChromaticNumber, result1);
     	
 		return result;
 		
