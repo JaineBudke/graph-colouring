@@ -487,7 +487,18 @@ public class Graph implements Cloneable, Serializable {
 		return null;
 	}
 	
-	
+	/**
+	 * Retorna uma lista das cópias dos vertices
+	 * @return
+	 */
+	public ArrayList<Vertex> cloneVertexes(){
+		ArrayList<Vertex> v = new ArrayList<Vertex>();
+		for(Vertex vv : vertexList) {
+			v.add(new Vertex(vv));
+		}
+		
+		return v;
+	}
 
 
 }

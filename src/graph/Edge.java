@@ -43,6 +43,16 @@ public class Edge implements Serializable {
 	}
 
 	/**
+	 * Contructor copia
+	 * @param adj
+	 */
+	public Edge(Edge adj) {
+		this.origin = adj.origin;
+		this.destination = adj.destination;
+		this.weight = adj.weight;
+	}
+
+	/**
 	 * Aumenta o peso da aresta em 1
 	 */
 	public void increaseWeight( ){
