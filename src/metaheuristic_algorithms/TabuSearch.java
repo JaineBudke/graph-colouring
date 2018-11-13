@@ -1,7 +1,10 @@
 package metaheuristic_algorithms;
 
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.TreeMap;
 
+import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
 
@@ -17,6 +20,10 @@ public class TabuSearch {
 	public ArrayList<Vertex> initialSolution() {
 		
 		// atribui uma cor a cada vertice
+		for( int i=0; i<vertexes.size(); i++ ){
+			vertexes.get(i).setColor(i+"");
+		}
+		
 		
 		return vertexes;
 	}
@@ -25,18 +32,67 @@ public class TabuSearch {
 		
 		// para apos 10 solucoes sem diminuir numero de conflitos
 		
+		
 		return true;
 	}
 	
 	
+	public int calculateConflicts( Vertex v ){
+		
+		// map com soluções
+		TreeMap<Integer, Integer> map = new TreeMap<>();
+		
+		// recupera adjacentes de v
+		ArrayList<Edge> adjacents = v.getAdjacentVertexes();
+		
+		for( int i=0; i<adjacents.size(); i++ ){
+			Vertex vAdj = adjacents.get(i).getVertex(v);
+			
+			// verifica qual a cor de vAdj
+			int color = Integer.parseInt(vAdj.getColor());
+			
+			// se já tiver chave com essa cor no map, +1 ao valor do map[key]
+			if( map.containsKey(color) ) {
+				int value = map.get(color);
+				value += 1;
+				map.put(color, value);
+			} 
+			// se não tiver, adiciona chave no map
+			else {
+				map.put(color, 0);
+			}
+			
+		}
+		
+		// recupera do treemap cor com menor valor
+		return map.firstKey();
+		
+	}
+	
 	public ArrayList<ArrayList<Vertex>> getNeighbors( ArrayList<Vertex> bestCandidate ){
 		
-		// percorre n/2
-			// escolhe aleatoriamente um vertice
-			// calcula conflitos
-			// recupera solucao com menos conflitos (treemap)
+		ArrayList<ArrayList<Vertex>> neighbors = new ArrayList<>(); 
 		
-		return null;
+		// percorre n/2
+		for( int i=0; i<(vertexes.size())/2; i++ ){
+			
+			// escolhe aleatoriamente um vertice
+			Random rand = new Random();
+			int n = rand.nextInt( vertexes.size());
+			Vertex v = vertexes.get(n);
+			
+			// calcula conflitos
+			int color = calculateConflicts( v );	
+			v.setColor(color+"");
+			
+			// gera solucao com a nova cor do v
+			ArrayList<Vertex> candidate = (ArrayList<Vertex>) vertexes.clone();
+			
+			neighbors.add(candidate);
+			
+		}
+		
+		return neighbors;
 	}
 	
 	
@@ -96,12 +152,27 @@ public class TabuSearch {
 	 * @param candidate
 	 * @return
 	 */
-	private float calculateFitness(ArrayList<Vertex> candidate) {
+	private int calculateFitness(ArrayList<Vertex> candidate) {
+		
+		int quantColor = 0;
 		
 		// percorre vertices da solucao candidata
+		for( int i=0; i<candidate.size(); i++ ){
 			// percorre os adjacentes de v
+			ArrayList<Edge> adjacents = candidate.get(i).getAdjacentVertexes();
+			for( int j=0; j<adjacents.size(); j++ ){
+				
 				// calcula numero de vertices adjacentes que tem mesma cor de v
-		
-		return 0;
+				// recupera adjacente
+				Vertex adj = adjacents.get(j).getVertex(candidate.get(i));
+				if( adj.getColor().equals( candidate.get(i).getColor() ) ){
+					quantColor++;
+				}
+				
+			}
+	
+		}
+			
+		return quantColor;
 	}
 }

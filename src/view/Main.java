@@ -2,6 +2,7 @@ package view;
 
 import manager.Engine;
 import metaheuristic_algorithms.AntColony;
+import metaheuristic_algorithms.TabuSearch;
 import test.AntColonyTest;
 
 import java.io.IOException;
@@ -79,10 +80,10 @@ public class Main {
 		}
 		
 		engine = new Engine();
-		engine.readArchivebyFilename("DSJC125.1.col");
+		engine.readArchivebyFilename("myciel3.col");
 		// cria o grafo
 		graph = engine.createGraph();
-		ant = new AntColony();
+		/*ant = new AntColony();
 		result = ant.execute(graph);
 		vertexes = new ArrayList<Vertex>();
 		for (Integer key : result.keySet()) {
@@ -90,7 +91,10 @@ public class Main {
 			System.out.println("Número de cores: "+key);	
 			vertexes = result.get(key).get(result.get(key).firstKey());
 			
-		}
+		}*/
+		
+		TabuSearch tabu = new TabuSearch();
+		tabu.execute(graph);
 		
 		
 		
