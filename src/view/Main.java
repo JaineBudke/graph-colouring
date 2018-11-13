@@ -29,10 +29,6 @@ public class Main {
 
 	public static void main(String[] args) {
 	
-		Engine engine = new Engine( );
-		Brown_algorithm brown = new Brown_algorithm();
-		
-		ZykovAlgorithm zykov = new ZykovAlgorithm();
 		
 		Vertex v0 = new Vertex("v8");
 		Vertex v1 = new Vertex("v1");
@@ -61,37 +57,15 @@ public class Main {
 		graph.addEdge(v7, v5);
 		graph.addEdge(v6, v5);
 		graph.addEdge(v7, v6);**/
-		engine.readArchivebyFilename("DSJC250.5.col");
-		// cria o grafo
-		graph = engine.createGraph();
 		
-		AntColony ant = new AntColony();
-		Map<Integer, TreeMap<Integer, ArrayList<Vertex>>> result = ant.execute(graph);
 		
-
-
-		// imprime numero de cores
-		ArrayList<Vertex> vertexes = new ArrayList<Vertex>();
-		for (Integer key : result.keySet()) {
-
-			System.out.println("Número de cores: "+key);	
-			vertexes = result.get(key).get(result.get(key).firstKey());
-			
-		}
 		
-		engine = new Engine();
+		
+		
+		Engine engine = new Engine( );
 		engine.readArchivebyFilename("myciel3.col");
-		// cria o grafo
 		graph = engine.createGraph();
-		/*ant = new AntColony();
-		result = ant.execute(graph);
-		vertexes = new ArrayList<Vertex>();
-		for (Integer key : result.keySet()) {
 
-			System.out.println("Número de cores: "+key);	
-			vertexes = result.get(key).get(result.get(key).firstKey());
-			
-		}*/
 		
 		TabuSearch tabu = new TabuSearch();
 		tabu.execute(graph);

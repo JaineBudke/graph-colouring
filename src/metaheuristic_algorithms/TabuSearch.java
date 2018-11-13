@@ -10,12 +10,14 @@ import graph.Vertex;
 
 public class TabuSearch {
 
-	//Lista que guarda as soluções
+	// Lista que guarda as soluções
 	ArrayList <ArrayList<Vertex>> tabuList;
 	// Lista de vertices do grafo
 	ArrayList<Vertex> vertexes;
-	
-	
+	// conflito melhor candidato
+	int conflict = 0;
+	// armazena conflitos das ultimas 10 iterações
+	ArrayList<Integer> conflicts = new ArrayList<>();
 	
 	public ArrayList<Vertex> initialSolution() {
 		
@@ -24,16 +26,27 @@ public class TabuSearch {
 			vertexes.get(i).setColor(i+"");
 		}
 		
-		
 		return vertexes;
 	}
 	
 	public boolean stopCriteria() {
 		
+		if( conflicts.size() < 10 ){
+			return true;
+		}
+		
+		int prevConflict = conflicts.get(0);
+		
 		// para apos 10 solucoes sem diminuir numero de conflitos
+		for( int i=1; i<10; i++ ){
+			if( conflicts.get(i) == prevConflict ){
+				return false;
+			} else {
+				return true;
+			}
+		}
 		
-		
-		return true;
+		return false;
 	}
 	
 	
@@ -95,57 +108,6 @@ public class TabuSearch {
 		return neighbors;
 	}
 	
-	
-	
-	/*
-	 * Executa a busca tabu
-	 */
-	public ArrayList<Vertex> execute(Graph g) {
-		
-		//Inicialização 
-		//Uma solução será uma lista de vértices coloridos
-		ArrayList<Vertex> vertexes = g.cloneVertexes();
-		ArrayList<Vertex> s0 = initialSolution();
-		ArrayList<Vertex> bestSolution = s0;
-		ArrayList<Vertex> bestCandidate = s0;
-		tabuList = new ArrayList<ArrayList<Vertex>>();
-		tabuList.add(s0);
-		
-		while( stopCriteria() ) {
-			ArrayList<ArrayList<Vertex>> neighborhood = getNeighbors(bestCandidate);
-			for( ArrayList<Vertex> candidate :  neighborhood) {
-				// Search the best solution in the neighborhood
-				if( !tabuList.contains(candidate)) {
-					float fitnessCandidate = calculateFitness(candidate);
-					float fitnessBestCandidate = calculateFitness(bestCandidate);
-					if(fitnessCandidate > fitnessBestCandidate) {
-						//update the best candidate
-						bestCandidate = candidate;
-						
-					}
-				}
-			}
-			
-			// Check if the best neighbor is the best solution so far
-			if(calculateFitness(bestCandidate) > calculateFitness(bestSolution)) {
-				bestSolution = bestCandidate;
-				// salva numero de conflitos de melhor candidato
-			}
-			
-			// Keep the best candidate at the tabu list
-			tabuList.add(bestCandidate);
-			
-			if(tabuList.size() > 0.2 *(vertexes.size())) {
-				tabuList.remove(0);
-			}
-			
-			return bestSolution;
-			
-		}
-		return bestCandidate;
-		
-		
-	}
 
 	/**
 	 * Calcula aptidão de uma solução
@@ -175,4 +137,69 @@ public class TabuSearch {
 			
 		return quantColor;
 	}
+	
+	
+	/*
+	 * Executa a busca tabu
+	 */
+	public ArrayList<Vertex> execute(Graph g) {
+		
+		//Inicialização 
+		//Uma solução será uma lista de vértices coloridos
+
+		vertexes = g.cloneVertexes();
+		ArrayList<Vertex> s0 = initialSolution();
+		ArrayList<Vertex> bestSolution = s0;
+		ArrayList<Vertex> bestCandidate = s0;
+		tabuList = new ArrayList<ArrayList<Vertex>>();
+		tabuList.add(s0);
+		
+		
+		while( stopCriteria() ) {
+			
+			ArrayList<ArrayList<Vertex>> neighborhood = getNeighbors(bestCandidate);
+			for( ArrayList<Vertex> candidate :  neighborhood) {
+				// Search the best solution in the neighborhood
+				if( !tabuList.contains(candidate)) {
+					float fitnessCandidate = calculateFitness(candidate);
+					float fitnessBestCandidate = calculateFitness(bestCandidate);
+					if(fitnessCandidate > fitnessBestCandidate) {
+						//update the best candidate
+						bestCandidate = candidate;
+						
+					}
+				}
+			}
+			
+			// Check if the best neighbor is the best solution so far
+			if(calculateFitness(bestCandidate) > calculateFitness(bestSolution)) {
+				bestSolution = bestCandidate;
+				// salva numero de conflitos de melhor candidato
+				conflict = calculateFitness(bestCandidate);
+				// adiciona conflito na lista de conflitos
+				conflicts.add(conflict);
+				// se já tiver cheia, remove primeiro
+				if( conflicts.size() > 10 ) {
+					conflicts.remove(0);
+				}
+			}
+			
+			// Keep the best candidate at the tabu list
+			tabuList.add(bestCandidate);
+			
+			if(tabuList.size() > 0.2 *(vertexes.size())) {
+				tabuList.remove(0);
+			}
+			
+			return bestSolution;
+			
+		}
+		
+		System.out.println(bestCandidate);
+		
+		return bestCandidate;
+		
+		
+	}
+
 }
