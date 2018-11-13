@@ -125,9 +125,9 @@ public class Edge implements Serializable {
 	 */
 	public Vertex getVertex( Vertex v ){
 		
-		if( this.origin == v ){
+		if( this.origin.getLabel() == v.getLabel() ){
 			return this.destination;
-		} else if ( this.destination == v ) {
+		} else if ( this.destination.getLabel() == v.getLabel() ) {
 			return this.origin;
 		} else {
 			return null;

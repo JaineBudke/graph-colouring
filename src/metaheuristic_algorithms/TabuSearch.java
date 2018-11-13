@@ -58,6 +58,16 @@ public class TabuSearch {
 		// recupera adjacentes de v
 		ArrayList<Edge> adjacents = v.getAdjacentVertexes();
 		
+		System.out.println(adjacents.size());
+		
+		for( int i=0; i<adjacents.size(); i++ ){
+			Edge ead = adjacents.get(i);
+			//System.out.println(ead.getVertex(v));
+			Vertex vad = ead.getVertex(v);
+			System.out.println(vad.getColor());
+			//System.out.println(adjacents.get(i).getVertex(v).getColor());
+		}
+		
 		for( int i=0; i<adjacents.size(); i++ ){
 			Vertex vAdj = adjacents.get(i).getVertex(v);
 			
@@ -87,16 +97,21 @@ public class TabuSearch {
 		ArrayList<ArrayList<Vertex>> neighbors = new ArrayList<>(); 
 		
 		// percorre n/2
-		for( int i=0; i<(vertexes.size())/2; i++ ){
+		for( int i=0; i<(bestCandidate.size())/2; i++ ){
 			
 			// escolhe aleatoriamente um vertice
 			Random rand = new Random();
 			int n = rand.nextInt( vertexes.size());
 			Vertex v = vertexes.get(n);
 			
+			
+			
+			System.out.println(v);
+			
 			// calcula conflitos
 			int color = calculateConflicts( v );	
 			v.setColor(color+"");
+			
 			
 			// gera solucao com a nova cor do v
 			ArrayList<Vertex> candidate = (ArrayList<Vertex>) vertexes.clone();
@@ -153,7 +168,7 @@ public class TabuSearch {
 		ArrayList<Vertex> bestCandidate = s0;
 		tabuList = new ArrayList<ArrayList<Vertex>>();
 		tabuList.add(s0);
-		
+
 		
 		while( stopCriteria() ) {
 			
