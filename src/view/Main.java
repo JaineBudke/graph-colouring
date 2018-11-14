@@ -63,7 +63,7 @@ public class Main {
 		
 		
 		Engine engine = new Engine( );
-		engine.readArchivebyFilename("myciel3.col");
+		engine.readArchivebyFilename("myciel6.col");
 		graph = engine.createGraph();
 
 		

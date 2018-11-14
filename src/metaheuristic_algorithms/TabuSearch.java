@@ -58,15 +58,7 @@ public class TabuSearch {
 		// recupera adjacentes de v
 		ArrayList<Edge> adjacents = v.getAdjacentVertexes();
 		
-		System.out.println(adjacents.size());
 		
-		for( int i=0; i<adjacents.size(); i++ ){
-			Edge ead = adjacents.get(i);
-			//System.out.println(ead.getVertex(v));
-			Vertex vad = ead.getVertex(v);
-			System.out.println(vad.getColor());
-			//System.out.println(adjacents.get(i).getVertex(v).getColor());
-		}
 		
 		for( int i=0; i<adjacents.size(); i++ ){
 			Vertex vAdj = adjacents.get(i).getVertex(v);
@@ -97,16 +89,14 @@ public class TabuSearch {
 		ArrayList<ArrayList<Vertex>> neighbors = new ArrayList<>(); 
 		
 		// percorre n/2
-		for( int i=0; i<(bestCandidate.size())/2; i++ ){
+		for( int i=0; i<(bestCandidate.size()); i++ ){
 			
 			// escolhe aleatoriamente um vertice
 			Random rand = new Random();
 			int n = rand.nextInt( vertexes.size());
 			Vertex v = vertexes.get(n);
 			
-			
-			
-			System.out.println(v);
+				
 			
 			// calcula conflitos
 			int color = calculateConflicts( v );	
@@ -162,13 +152,16 @@ public class TabuSearch {
 		//Inicialização 
 		//Uma solução será uma lista de vértices coloridos
 
-		vertexes = g.cloneVertexes();
+		vertexes = g.getVertexes();
 		ArrayList<Vertex> s0 = initialSolution();
 		ArrayList<Vertex> bestSolution = s0;
 		ArrayList<Vertex> bestCandidate = s0;
 		tabuList = new ArrayList<ArrayList<Vertex>>();
 		tabuList.add(s0);
 
+		
+		
+	
 		
 		while( stopCriteria() ) {
 			
@@ -206,13 +199,34 @@ public class TabuSearch {
 				tabuList.remove(0);
 			}
 			
+			//System.out.println(bestSolution);
+
+			ArrayList<Integer> colors = new ArrayList<>();
+			int numColors = 0;
+			for( int k=0; k<bestSolution.size(); k++ ){
+				System.out.print(bestSolution.get(k).getLabel() +"  ");
+				System.out.println(bestSolution.get(k).getColor());
+				int color = Integer.parseInt(bestSolution.get(k).getColor());
+				// se a lista contem a cor, nao faz nada, senao adiciona e contabiliza mais uma cor
+				if( !(colors.contains(color)) ) {
+					colors.add(color);
+					numColors++;
+				}
+			}
+			
+			
+			System.out.println();
+			System.out.println(numColors);
+			
 			return bestSolution;
 			
 		}
 		
-		System.out.println(bestCandidate);
+		
 		
 		return bestCandidate;
+		
+		
 		
 		
 	}
