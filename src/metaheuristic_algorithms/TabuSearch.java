@@ -19,6 +19,10 @@ public class TabuSearch {
 	// armazena conflitos das ultimas 10 iterações
 	ArrayList<Integer> conflicts = new ArrayList<>();
 	
+	/**
+	 * Gera uma coloração inicial
+	 * @return
+	 */
 	public ArrayList<Vertex> initialSolution() {
 		
 		// atribui uma cor a cada vertice
@@ -29,6 +33,11 @@ public class TabuSearch {
 		return vertexes;
 	}
 	
+	/**
+	 * Checa se o calgoritmo deve continuar a execução
+	 * @return Verdadeiro se existem menos de 10 iterações sem 
+	 * melhorar a solução, falso caso contrário
+	 */
 	public boolean stopCriteria() {
 		
 		if( conflicts.size() < 10 ){
@@ -49,7 +58,12 @@ public class TabuSearch {
 		return false;
 	}
 	
-	
+	/**
+	 * Calcula os conflitos que podem ser gerados 
+	 * ao trocar a cor de um vértice.
+	 * @param v Vértice analisado
+	 * @return
+	 */
 	public int calculateConflicts( Vertex v ){
 		
 		// map com soluções
@@ -74,27 +88,37 @@ public class TabuSearch {
 			} 
 			// se não tiver, adiciona chave no map
 			else {
-				map.put(color, 0);
+				map.put(color, 1);
 			}
 			
 		}
 		
 		// recupera do treemap cor com menor valor
-		return map.firstKey();
+		return map.values().stream().min(Integer::compare).get();
 		
 	}
 	
+	/**
+	 * Gera a vizinhança de uma solução
+	 * @param bestCandidate Solução para a qual é gerada a vizinhança
+	 * @return Lista de soluções vizinhas
+	 */
 	public ArrayList<ArrayList<Vertex>> getNeighbors( ArrayList<Vertex> bestCandidate ){
 		
 		ArrayList<ArrayList<Vertex>> neighbors = new ArrayList<>(); 
+		
+		ArrayList<Vertex> candidate = new ArrayList<>();
+		for( Vertex v : bestCandidate) {
+			candidate.add(v);
+		}
+		Random rand = new Random();
 		
 		// percorre n/2
 		for( int i=0; i<(bestCandidate.size()); i++ ){
 			
 			// escolhe aleatoriamente um vertice
-			Random rand = new Random();
 			int n = rand.nextInt( vertexes.size());
-			Vertex v = vertexes.get(n);
+			Vertex v = candidate.get(i);
 			
 				
 			
@@ -104,10 +128,17 @@ public class TabuSearch {
 			
 			
 			// gera solucao com a nova cor do v
-			ArrayList<Vertex> candidate = (ArrayList<Vertex>) vertexes.clone();
+			ArrayList<Vertex> solution = new ArrayList<>();
+			for( Vertex v1 : bestCandidate) {
+				solution.add(v1);
+			}
+			neighbors.add(solution);
 			
-			neighbors.add(candidate);
-			
+			//Reseta o grafo
+			candidate.clear();
+			for( Vertex v1 : bestCandidate) {
+				candidate.add(v1);
+			}
 		}
 		
 		return neighbors;
