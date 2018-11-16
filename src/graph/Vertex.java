@@ -30,6 +30,19 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 		this.adjacents = new ArrayList<Edge>();
 		this.color = null;
 	}
+	
+	/**
+	 * Construtor cópia
+	 * @param another
+	 */
+	public Vertex(Vertex another) {
+		this.label = another.getLabel();
+		this.color = another.getColor();
+		this.adjacents = new ArrayList<Edge>();
+		for( Edge adj: another.adjacents) {
+			this.addAdjacent(new Edge(adj));
+		}
+	}
 
 	/**
 	 * Método para adicionar aresta que possui adjacencia com o vertice

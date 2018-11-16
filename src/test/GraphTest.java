@@ -160,4 +160,39 @@ Graph graph = new Graph();
 		
 	}
 
+	@Test
+	public void testClone() {
+		Graph graph = new Graph();
+		
+		for( int i = 0; i< 5; i++) {
+			Vertex v = new Vertex("v"+i);
+			graph.addVertex(v);
+		}
+		// Testa grafo completo com cores diferentes
+		for(int i = 0; i < graph.getVertexes().size(); i++) {
+			graph.getVertex(i).setColor(i+"");
+			for( int j = i +1 ;j < graph.getVertexes().size(); j++) {
+
+				graph.addEdge(graph.getVertex(i), graph.getVertex(j));
+			}
+		}
+		
+		ArrayList<Vertex> vs = graph.cloneVertexes();
+		
+		for(int i=0; i< graph.getVertexes().size(); i++) {
+			assertEquals(graph.getVertex(i).getColor(),vs.get(i).getColor());
+			assertEquals(graph.getVertex(i).getLabel(),vs.get(i).getLabel());
+		}
+		
+		vs.get(0).setColor("10");
+		assertNotEquals(graph.getVertex(0).getColor(), vs.get(0).getColor());
+		
+		vs.get(0).getAdjacentVertexes().remove(0);
+		assertNotEquals(graph.getVertex(0).getAdjacentVertexes().size(), vs.get(0).getAdjacentVertexes().size());
+		
+		
+		vs.get(0).getAdjacentVertexes().get(0).increaseWeight();
+		assertNotEquals(graph.getVertex(0).getAdjacentVertexes().get(0).getWeight(), vs.get(0).getAdjacentVertexes().get(0).getWeight());
+
+	}
 }

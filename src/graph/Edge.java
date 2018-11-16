@@ -43,6 +43,16 @@ public class Edge implements Serializable {
 	}
 
 	/**
+	 * Contructor copia
+	 * @param adj
+	 */
+	public Edge(Edge adj) {
+		this.origin = adj.origin;
+		this.destination = adj.destination;
+		this.weight = adj.weight;
+	}
+
+	/**
 	 * Aumenta o peso da aresta em 1
 	 */
 	public void increaseWeight( ){
@@ -115,9 +125,9 @@ public class Edge implements Serializable {
 	 */
 	public Vertex getVertex( Vertex v ){
 		
-		if( this.origin == v ){
+		if( this.origin.getLabel() == v.getLabel() ){
 			return this.destination;
-		} else if ( this.destination == v ) {
+		} else if ( this.destination.getLabel() == v.getLabel() ) {
 			return this.origin;
 		} else {
 			return null;
