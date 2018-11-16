@@ -48,9 +48,8 @@ public class TabuSearch {
 		
 		// para apos 10 solucoes sem diminuir numero de conflitos
 		for( int i=1; i<10; i++ ){
-			if( conflicts.get(i) == prevConflict ){
-				return false;
-			} else {
+			// Se em alguma iteração diminuiu o numero de conflitos, continua
+			if( conflicts.get(i) < prevConflict ) {
 				return true;
 			}
 		}
@@ -230,7 +229,6 @@ public class TabuSearch {
 				tabuList.remove(0);
 			}
 			
-			//System.out.println(bestSolution);
 	
 		}
 

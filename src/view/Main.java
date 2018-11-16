@@ -48,14 +48,13 @@ public class Main {
 		
 		
 		Engine engine = new Engine( );
-		engine.readArchivebyFilename("myciel3.col");
+		engine.readArchivebyFilename("DSJC125.5.col");
 		Graph graph = engine.createGraph();
 
 		
 		TabuSearch tabu = new TabuSearch();
 		tabu.execute(graph);
 
-		
 	}
 
 }
