@@ -48,16 +48,13 @@ public class Main {
 		
 		
 		Engine engine = new Engine( );
-		engine.readArchivebyFilename("myciel4.col");
+		engine.readArchivebyFilename("myciel3.col");
 		Graph graph = engine.createGraph();
 
 		
 		TabuSearch tabu = new TabuSearch();
 		tabu.execute(graph);
-		
-		if(!graph.hasValidColoring()) {
-			System.out.println("meurda");
-		}
+
 		
 	}
 

@@ -135,10 +135,11 @@ public class TabuSearch {
 			neighbors.add(solution);
 			
 			//Reseta o grafo
+			/**
 			candidate.clear();
 			for( Vertex v1 : bestCandidate) {
 				candidate.add(v1);
-			}
+			}**/
 		}
 		
 		return neighbors;
@@ -189,9 +190,6 @@ public class TabuSearch {
 		ArrayList<Vertex> bestCandidate = s0;
 		tabuList = new ArrayList<ArrayList<Vertex>>();
 		tabuList.add(s0);
-
-		
-		
 	
 		
 		while( stopCriteria() ) {
@@ -210,17 +208,19 @@ public class TabuSearch {
 				}
 			}
 			
+			// salva numero de conflitos de melhor candidato
+			conflict = calculateFitness(bestCandidate);
+			// adiciona conflito na lista de conflitos
+			conflicts.add(conflict);
+			// se já tiver cheia, remove primeiro
+			if( conflicts.size() > 10 ) {
+				conflicts.remove(0);
+			}
+			
 			// Check if the best neighbor is the best solution so far
 			if(calculateFitness(bestCandidate) > calculateFitness(bestSolution)) {
 				bestSolution = bestCandidate;
-				// salva numero de conflitos de melhor candidato
-				conflict = calculateFitness(bestCandidate);
-				// adiciona conflito na lista de conflitos
-				conflicts.add(conflict);
-				// se já tiver cheia, remove primeiro
-				if( conflicts.size() > 10 ) {
-					conflicts.remove(0);
-				}
+				
 			}
 			
 			// Keep the best candidate at the tabu list
@@ -231,29 +231,23 @@ public class TabuSearch {
 			}
 			
 			//System.out.println(bestSolution);
-
-			ArrayList<Integer> colors = new ArrayList<>();
-			int numColors = 0;
-			for( int k=0; k<bestSolution.size(); k++ ){
-				System.out.print(bestSolution.get(k).getLabel() +"  ");
-				System.out.println(bestSolution.get(k).getColor());
-				int color = Integer.parseInt(bestSolution.get(k).getColor());
-				// se a lista contem a cor, nao faz nada, senao adiciona e contabiliza mais uma cor
-				if( !(colors.contains(color)) ) {
-					colors.add(color);
-					numColors++;
-				}
-			}
-			
-			
-			System.out.println();
-			System.out.println(numColors);
-			
-			return bestSolution;
-			
+	
 		}
-		
-		
+
+		ArrayList<Integer> colors = new ArrayList<>();
+		int numColors = 0;
+		for( int k=0; k<bestSolution.size(); k++ ){
+			System.out.print(bestSolution.get(k).getLabel() +"  ");
+			System.out.println(bestSolution.get(k).getColor());
+			int color = Integer.parseInt(bestSolution.get(k).getColor());
+			// se a lista contem a cor, nao faz nada, senao adiciona e contabiliza mais uma cor
+			if( !(colors.contains(color)) ) {
+				colors.add(color);
+				numColors++;
+			}
+		}
+		System.out.println();
+		System.out.println(numColors);
 		
 		return bestCandidate;
 		
