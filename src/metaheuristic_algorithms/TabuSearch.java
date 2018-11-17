@@ -178,7 +178,7 @@ public class TabuSearch {
 	/*
 	 * Executa a busca tabu
 	 */
-	public ArrayList<Vertex> execute(Graph g) {
+	public ArrayList<Integer> execute(Graph g) {
 		
 		//Inicialização 
 		//Uma solução será uma lista de vértices coloridos
@@ -190,7 +190,7 @@ public class TabuSearch {
 		tabuList = new ArrayList<ArrayList<Vertex>>();
 		tabuList.add(s0);
 	
-		
+		int iterations = 0;
 		while( stopCriteria() ) {
 			
 			ArrayList<ArrayList<Vertex>> neighborhood = getNeighbors(bestCandidate);
@@ -228,15 +228,13 @@ public class TabuSearch {
 			if(tabuList.size() > 0.2 *(vertexes.size())) {
 				tabuList.remove(0);
 			}
-			
+			iterations++;
 	
 		}
 
 		ArrayList<Integer> colors = new ArrayList<>();
 		int numColors = 0;
 		for( int k=0; k<bestSolution.size(); k++ ){
-			System.out.print(bestSolution.get(k).getLabel() +"  ");
-			System.out.println(bestSolution.get(k).getColor());
 			int color = Integer.parseInt(bestSolution.get(k).getColor());
 			// se a lista contem a cor, nao faz nada, senao adiciona e contabiliza mais uma cor
 			if( !(colors.contains(color)) ) {
@@ -244,10 +242,11 @@ public class TabuSearch {
 				numColors++;
 			}
 		}
-		System.out.println();
-		System.out.println(numColors);
 		
-		return bestCandidate;
+		ArrayList<Integer> result = new ArrayList<>();
+		result.add(iterations);
+		result.add(numColors);
+		return result;
 		
 		
 		
